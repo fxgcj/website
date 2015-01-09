@@ -1,22 +1,30 @@
 package controllers
 
 import (
-	"blog/models"
-	"github.com/astaxie/beego"
+	"github.com/ckeyer/goblog/models"
 )
 
 type BlogController struct {
-	beego.Controller
+	BaseController
 }
 
-func (this *BlogController) Get() {
-	wp := models.NewWebPage("首页")
-	wp.IncrViewCount()
+// (b *BaseController)GetBlogs ...
+func (b *BlogController) Get() {
+	b.Data["LastestBlogs"] = models.GetBlogs(0, 5)
+	b.Data["Tags"] = models.GetAllTags()
+	b.Data["Category"] = models.GetAllCategory()
+	b.Data["MonthBlog"] = models.GetAllMonth()
 
-	this.Data["PageTitle"] = wp.GetPageTitle()
-	this.Data["img_host"] = wp.GetImgHost()
+	name := b.Ctx.Input.Param(":name")
+	blog := models.GetBlog(name)
+	if blog == nil {
+		log.Debug("name: ", name)
+		return
+	}
+	b.Data["Blog"] = blog
+	b.Data["BContent"] = string(blog.Content)
 
-	this.Data["PageTitle"] = this.Ctx.Input.Param(":key")
-
-	this.TplNames = "index.tpl"
+	b.LayoutSections["Sidebar"] = "sidebar.tpl"
+	b.LayoutSections["Duoshuo"] = "duoshuo.tpl"
+	b.TplNames = "show.tpl"
 }
