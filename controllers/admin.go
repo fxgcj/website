@@ -4,12 +4,12 @@ import (
 // "github.com/fxgcj/website/models"
 )
 
-type BlogController struct {
+type AdminController struct {
 	BaseController
 }
 
 // (b *BaseController)GetBlogs ...
-func (b *BlogController) Get() {
+func (a *AdminController) Get() {
 	// b.Data["LastestBlogs"] = models.GetBlogs(0, 5)
 	// b.Data["Tags"] = models.GetAllTags()
 	// b.Data["Category"] = models.GetAllCategory()
@@ -24,7 +24,7 @@ func (b *BlogController) Get() {
 	// b.Data["Blog"] = blog
 	// b.Data["BContent"] = string(blog.Content)
 
-	b.LayoutSections["Sidebar"] = "sidebar.tpl"
-	b.LayoutSections["Duoshuo"] = "duoshuo.tpl"
-	b.TplNames = "admin/index.tpl"
+	// b.LayoutSections["Sidebar"] = "sidebar.tpl"
+	// b.LayoutSections["Duoshuo"] = "duoshuo.tpl"
+	// b.TplNames = "show.tpl"
 }

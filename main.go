@@ -2,21 +2,15 @@ package main
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/ckeyer/goblog/conf"
-	"github.com/ckeyer/goblog/libs"
-	"github.com/ckeyer/goblog/modules"
-	"github.com/ckeyer/goblog/routers"
+	"github.com/fxgcj/website/conf"
+	logpkg "github.com/fxgcj/website/lib/log"
+	"github.com/fxgcj/website/routers"
 )
 
-var log = libs.GetLogger()
+var log = logpkg.GetLogger()
 
 func init() {
 	conf.LoadConf("conf/v2.json")
-
-	err := modules.LoadBlogs(conf.GetConf().BlogDir)
-	if err != nil {
-		log.Error(err)
-	}
 }
 
 func main() {

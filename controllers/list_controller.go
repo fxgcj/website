@@ -3,7 +3,7 @@ package controllers
 import (
 	_ "container/list"
 
-	"github.com/ckeyer/goblog/conf"
+	"github.com/fxgcj/website/conf"
 )
 
 type ListController struct {

@@ -3,14 +3,14 @@ package controllers
 import (
 	"fmt"
 	"github.com/astaxie/beego"
-	"github.com/ckeyer/goblog/conf"
-	"github.com/ckeyer/goblog/libs"
+	"github.com/fxgcj/website/conf"
+	logpkg "github.com/fxgcj/website/lib/log"
 	"strings"
 )
 
 var (
 	website *conf.WebSite
-	log     = libs.GetLogger()
+	log     = logpkg.GetLogger()
 )
 
 type Controller struct {

@@ -1,10 +1,9 @@
 package models
 
 import (
-	"github.com/ckeyer/goblog/libs"
+	logpkg "github.com/fxgcj/website/lib/log"
 )
 
 var (
-	log = libs.GetLogger()
+	log = logpkg.GetLogger()
 )
-

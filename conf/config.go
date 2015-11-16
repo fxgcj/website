@@ -8,20 +8,19 @@ import (
 
 	"sync"
 
-	"github.com/ckeyer/goblog/libs"
+	logpkg "github.com/fxgcj/website/lib/log"
 )
 
 var (
 	confpath = ""
-	log      = libs.GetLogger()
+	log      = logpkg.GetLogger()
 	config   *Config
 )
 
 type Config struct {
 	sync.RWMutex
-	BlogDir string   `json:"blog_dir"`
 	WebSite *WebSite `json:"website"`
-	WebHook *WebHook `json:"webhook"`
+	MongoDB *MongoDB `json:"mongodb"`
 }
 
 type WebSite struct {
@@ -38,22 +37,10 @@ type WebSite struct {
 	CustomImgUrl string   `json:"custom_img_url"`
 	EnableDomain []string `json:"enable_domain"`
 }
-type WebHook struct {
-	Repos    string     `json:"repos"`
-	Secret   string     `json:"secret"`
-	Monitors []*Monitor `json:"monitor"`
-}
 
-type Monitor struct {
-	Branch string `json:"branch"`
-	User   string `json:"user"`
-	Action string `json:"action"`
-	Script string `json:"script"`
-}
-
-// init
-func init() {
-
+type MongoDB struct {
+	Host string `json:"host"`
+	Port int    `json:"port"`
 }
 
 // LoadConf 加载配置文件

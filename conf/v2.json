@@ -1,17 +1,16 @@
 {
-	"blog_dir":"blog/*.md",
 	"website":{
-		"index_num": 10,
+		"index_num": 7,
 		"lastest_num": 5,
-		"title":"Ckeyer博客",
+		"title":"风险观察",
 		"keywords":[
-			"ckeyer",
-			"golang",
-			"大数据"
+			"风险",
+			"学校安全",
+			"实事"
 		],
-		"description":"不折腾会死",
-		"host_url":"http://blog.ckeyer.com/",
-		"file_url":"http://www.ckeyer.com/",
+		"description":"热眼看社会，冷眼看风险。涉及领域：安全学校，社会稳评，风险评估，风险管理，舆情分析，企业风险，时评杂谈。",
+		"host_url":"http://fxgc.org/",
+		"file_url":"http://fxgc.org/",
 		"js_url":"/static/js/",
 		"img_url":"/static/img/",
 		"css_url":"/static/css/",
@@ -19,22 +18,13 @@
 		"custom_img_url":"/static/img/",
 		"custom_css_url":"/static/css/",
 		"enable_domain":[
-			"ckeyer.com",
-			"cjstudio.org",
-			"localhost",
-			"d.local"
+			"fxgc.org",
+			"127.0.0.1",
+			"localhost"
 		]
 	},
-	"webhook":{
-		"repos":"ckeyer/notes",
-		"secret":"test1234",
-		"monitor":[
-			{
-				"branch":"online",
-				"user":"",
-				"action":"",
-				"script":"cd blog && git pull origin online"
-			}
-		]
+	"mongodb":{
+		"host":"127.0.0.1",
+		"port":27017
 	}
 }
