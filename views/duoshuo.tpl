@@ -1,6 +1,6 @@
-<<<define "Duoshuo">>>
+{{define "Duoshuo"}}
 <!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="<<<.Blog.Name>>>" data-title="<<<.Blog.Title>>>" data-url="<<<.HostUrl>>><<<.Blog.Name>>>.html"></div>
+	<div class="ds-thread" data-thread-key="{{.Blog.Name}}" data-title="{{.Blog.Title}}" data-url="{{.HostUrl}}{{.Blog.Name}}.html"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -15,4 +15,4 @@ var duoshuoQuery = {short_name:"blog-ckeyer"};
 	})();
 	</script>
 <!-- 多说公共JS代码 end -->
-<<<end>>>
+{{end}}

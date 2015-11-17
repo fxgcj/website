@@ -35,8 +35,8 @@ func (b *BaseController) Prepare() {
 	//	b.AddCustomCssStyle("http://fonts.useso.com/", "css?family=Open+Sans:300,400,600&subset=latin,latin-ext")
 
 	b.AddCustomJsScript("//cdn.bootcss.com/jquery/2.1.4/", "jquery.min.js")
-	b.AddCustomJsScript("//cdn.bootcss.com/bootstrap/3.3.5/css/", "bootstrap.min.js")
-	b.AddCustomCssStyle("//cdn.bootcss.com/jquery-migrate/1.2.1/", "jquery-migrate.min.js")
+	b.AddCustomJsScript("//cdn.bootcss.com/bootstrap/3.3.5/js/", "bootstrap.min.js")
+	b.AddCustomJsScript("//cdn.bootcss.com/jquery-migrate/1.2.1/", "jquery-migrate.min.js")
 	b.AddCustomJsScript("//cdn.bootcss.com/wow/1.1.2/", "wow.min.js")
 
 	b.Data["Tail"] = `Download your use my life`

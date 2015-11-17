@@ -23,8 +23,19 @@ func (a *AdminController) Get() {
 	// }
 	// b.Data["Blog"] = blog
 	// b.Data["BContent"] = string(blog.Content)
-
+	log.Debug("fuck")
 	// b.LayoutSections["Sidebar"] = "sidebar.tpl"
 	// b.LayoutSections["Duoshuo"] = "duoshuo.tpl"
-	// b.TplNames = "show.tpl"
+	a.Data["fuck"] = "fuck"
+
+	a.Layout = "layout/admin.html"
+	a.TplNames = "admin/list.tpl"
+}
+
+func (a *AdminController) Create() {
+	a.AddJsScript("edit.js")
+	a.Data["fuck"] = "fuck"
+
+	a.Layout = "layout/admin.html"
+	a.TplNames = "admin/edit.tpl"
 }

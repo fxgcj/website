@@ -737,7 +737,7 @@ hr {
 2. Form Elements
 -------------------------------------------------------- */
 #content textarea, .wpcf7 textarea, #content select, .wpcf7 select, #content input[type="text"], .wpcf7 input[type="text"], #content input[type="password"], .wpcf7 input[type="password"], #content input[type="datetime"], .wpcf7 input[type="datetime"], #content input[type="datetime-local"], .wpcf7 input[type="datetime-local"], #content input[type="date"], .wpcf7 input[type="date"], #content input[type="month"], .wpcf7 input[type="month"], #content input[type="time"], .wpcf7 input[type="time"], #content input[type="week"], .wpcf7 input[type="week"], #content input[type="number"], .wpcf7 input[type="number"], #content input[type="email"], .wpcf7 input[type="email"], #content input[type="url"], .wpcf7 input[type="url"], #content input[type="search"], .wpcf7 input[type="search"], #content input[type="tel"], .wpcf7 input[type="tel"], #content input[type="color"], .wpcf7 input[type="color"] {
-  max-width: 400px;
+  /*max-width: 400px;*/
   border-radius: 0;
   border: 1px solid #e5e5e5;
   padding: 5px;
@@ -745,6 +745,7 @@ hr {
   width: 100%;
   color: #9e8f8f;
   font-family: "Open Sans", "Helvetica", "Arial", "sans-serif";
+  font-size: initial;
   -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
   transition: all 0.25s ease-in-out;
@@ -803,7 +804,7 @@ hr {
 #content, .wpcf7 {
   background-color: #fff; }
   #content textarea, .wpcf7 textarea {
-    height: 10em;
+    /*height: 10em;*/
     margin-top: 0; }
     #content textarea:focus, .wpcf7 textarea:focus {
       border-color: #76c5e4;

@@ -13,7 +13,7 @@ func LoadRouters() {
 
 	// beego.SetStaticPath("/img", "blog/img")
 	beego.AutoRouter(&controllers.AdminController{})
-	beego.Router("/admin", &controllers.BlogController{})
+	beego.Router("/admin", &controllers.AdminController{})
 	// beego.Router("/", &controllers.IndexController{})
 	beego.Router("/:name:string.html", &controllers.BlogController{})
 	// beego.Router("/tag", &controllers.TagController{})

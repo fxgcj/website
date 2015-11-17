@@ -9,6 +9,8 @@ import (
 var mongoConfig *conf.MongoDB
 
 const (
+	DB_ARTICLE = "fxgcj"
+
 	C_BLOGS = "blogs"
 	C_TAGS  = "tags"
 	C_      = ""
@@ -26,5 +28,5 @@ func GetMongoDB() *mgo.Database {
 	if err != nil {
 		panic(err)
 	}
-	return session.DB("fxgcj")
+	return session.DB(DB_ARTICLE)
 }

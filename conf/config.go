@@ -19,8 +19,16 @@ var (
 
 type Config struct {
 	sync.RWMutex
-	WebSite *WebSite `json:"website"`
-	MongoDB *MongoDB `json:"mongodb"`
+	AppConfig *AppConfig `json:"app"`
+	WebSite   *WebSite   `json:"website"`
+	MongoDB   *MongoDB   `json:"mongodb"`
+}
+
+type AppConfig struct {
+	RunMode    string `json:"mode"`
+	Name       string `json:"name"`
+	ServerName string `json:"server_name"`
+	Port       int    `json:"port"`
 }
 
 type WebSite struct {
@@ -44,7 +52,7 @@ type MongoDB struct {
 }
 
 // LoadConf 加载配置文件
-func LoadConf(path string) (err error) {
+func LoadConf(path string) (c *Config, err error) {
 	confpath = path
 	f, err := os.OpenFile(path, os.O_RDONLY, 0644)
 	if err != nil {
@@ -57,21 +65,12 @@ func LoadConf(path string) (err error) {
 		log.Errorf("读取文件 %s 失败，%s...", path, err)
 		return
 	}
-
-	c := new(Config)
+	c = new(Config)
 	err = json.Unmarshal(bs, c)
 	if err != nil {
 		log.Errorf("解析文件 %s 失败, %s", path, err)
 		return
 	}
-
-	if config != nil {
-		config.Lock()
-		defer config.Unlock()
-	}
-	config = c
-
-	log.Noticef("加载配置 %s 成功", path)
 	return
 }
 
@@ -81,9 +80,15 @@ func GetConf() *Config {
 		return config
 	}
 	if confpath != "" {
-		if LoadConf(confpath) == nil {
+		if c, err := LoadConf(confpath); err == nil {
+			if c != nil {
+				config = c
+			}
+			log.Noticef("加载配置 %s 成功", confpath)
 			return config
 		}
+	} else {
+		panic("path is nil ")
 	}
 	log.Errorf("%s, %#v", confpath, config)
 	panic("获取配置异常...")

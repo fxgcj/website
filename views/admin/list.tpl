@@ -14,18 +14,18 @@
 		  <p>{{ $blog.Summary }}</p>
 		</div>
 		<footer class="entry-footer">
-			  <ul class="post-categories">
-					{{ range $i, $categ := $blog.Category }}
-					  <li><a href="/category?c={{$categ}}" rel="category">{{$categ}}</a></li>
-					  {{end}}
-		          </ul>
-				  
-				  <ul class="post-tags">
-					{{range $i, $tag:= $blog.Tags }}
-					  <li><a href="/tag?t={{$tag}}" rel="tag">{{$tag}}</a></li>
-					  {{end}}
-		          </ul>
-				  
+		  <ul class="post-categories">
+			{{ range $i, $categ := $blog.Category }}
+			  <li><a href="/category?c={{$categ}}" rel="category">{{$categ}}</a></li>
+			  {{end}}
+          </ul>
+		  
+		  <ul class="post-tags">
+			{{range $i, $tag:= $blog.Tags }}
+			  <li><a href="/tag?t={{$tag}}" rel="tag">{{$tag}}</a></li>
+			  {{end}}
+          </ul>
+		  
 		  <div class="read-more">
 			<a href="/{{$blog.Name}}.html">阅读全文<i class="fa fa-angle-double-right "></i></a>
 		  </div>
@@ -34,5 +34,4 @@
 	  {{end}}
   </div>
 </div>
-
 
