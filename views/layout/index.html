@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<<< str2html .Metes >>>
+	{{ str2html .Metes }}
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-	<meta name="keywords" content="<<< .Keywords >>>" />
-	<meta name="description" content="<<< .Description >>>" />
-	<link rel="shortcut icon" href="<<< .WebSite.ImgUrl >>>favicon.ico" >
-	<title><<< .PageTitle >>></title>
-	<<< str2html .Styles >>>
+	<meta name="keywords" content="{{ .Keywords }}" />
+	<meta name="description" content="{{ .Description }}" />
+	<link rel="shortcut icon" href="{{ .WebSite.ImgUrl }}favicon.ico" >
+	<title>{{ .PageTitle }}</title>
+	{{ str2html .Styles }}
 
 	<!-- B Clicki 统计 -->
 	<script type="text/javascript">
@@ -39,8 +39,8 @@
 		<div class="container">
 		  <div class="row">
 			<div class="site-branding col-md-4">
-			  <h1 class="site-title"><a href="<<< .HostUrl >>>" rel="home"><<< .PageTitle >>></a></h1>
-			  <span class="site-description"><<< .Description >>></span>
+			  <h1 class="site-title"><a href="{{ .HostUrl }}" rel="home">{{ .PageTitle }}</a></h1>
+			  <span class="site-description">{{ .Description }}</span>
 			</div>
 		  </div>
 		</div>
@@ -52,8 +52,8 @@
 		  <div class="container">
 			<div class="row">
 			  
-			  <<< .LayoutContent >>>
-			  <<< .Sidebar >>>
+			  {{ .LayoutContent }}
+			  {{ .Sidebar }}
 
 			</div>
 		  </div>
@@ -64,7 +64,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 copyright-text">
-				<a href="<<<.HostUrl>>>"><<<.Tail>>></a>
+				<a href="{{.HostUrl}}">{{.Tail}}</a>
 			</div>
 			<div class="col-md-6 social-icon-container clearfix">
 				<ul></ul>
@@ -75,6 +75,6 @@
 	<!-- end container -->
 </footer>
 	</div>
-	<<< str2html .Scripts >>>
+	{{ str2html .Scripts }}
   </body>
 </html>

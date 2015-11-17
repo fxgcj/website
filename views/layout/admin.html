@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	{{ str2html .Metes }}
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<meta name="keywords" content="{{ .Keywords }}" />
+	<meta name="description" content="{{ .Description }}" />
+	<link rel="shortcut icon" href="{{ .WebSite.ImgUrl }}favicon.ico" >
+	<title>{{ .PageTitle }}</title>
+	{{ str2html .Styles }}
+  </head>
+
+  <body class="home blog wide">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+	<div id="page" class="hfeed site">
+
+	  
+	  <header id="masthead" class="main-header" role="banner">
+		<div class="container">
+		  <div class="row">
+			<div class="site-branding col-md-4">
+			  <h1 class="site-title"><a href="{{ .HostUrl }}" rel="home">{{ .PageTitle }}</a></h1>
+			  <span class="site-description">{{ .Description }}</span>
+			</div>
+		  </div>
+		</div>
+	  </header>
+
+	  
+	  <div id="content">
+		<div class="quest-row site-content">
+		  <div class="container">
+			<div class="row">
+			  
+			  {{ .LayoutContent }}
+			  {{ .Sidebar }}
+
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+	<footer id="colophon" class="copyright quest-row" role="contentinfo">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 copyright-text">
+				<a href="{{.HostUrl}}">{{.Tail}}</a>
+			</div>
+			<div class="col-md-6 social-icon-container clearfix">
+				<ul></ul>
+			</div>
+		</div>
+		<!-- end row -->
+	</div>
+	<!-- end container -->
+</footer>
+	</div>
+	{{ str2html .Scripts }}
+  </body>
+</html>

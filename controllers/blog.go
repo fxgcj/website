@@ -24,7 +24,8 @@ func (b *BlogController) Get() {
 	// b.Data["Blog"] = blog
 	// b.Data["BContent"] = string(blog.Content)
 
-	b.LayoutSections["Sidebar"] = "sidebar.tpl"
-	b.LayoutSections["Duoshuo"] = "duoshuo.tpl"
-	b.TplNames = "admin/index.tpl"
+	// b.LayoutSections["Sidebar"] = "sidebar.tpl"
+	// b.LayoutSections["Duoshuo"] = "duoshuo.tpl"
+	// b.TplNames = "admin/list.tpl"
+	b.Ctx.WriteString("content")
 }

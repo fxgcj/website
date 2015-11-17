@@ -8,18 +8,25 @@ import (
 )
 
 var log = logpkg.GetLogger()
+var config *conf.Config
 
 func init() {
-	conf.LoadConf("conf/v2.json")
+	var err error
+	config, err = conf.LoadConf("conf/v2.json")
+	if err != nil {
+		panic(err)
+	}
+	BeegoInit()
 }
 
 func main() {
-	BeegoInit()
 	beego.Run()
 }
 
 func BeegoInit() {
-	beego.TemplateLeft = "<<<"
-	beego.TemplateRight = ">>>"
+	beego.RunMode = config.AppConfig.RunMode
+	beego.AppName = config.AppConfig.Name
+	beego.HttpPort = config.AppConfig.Port
+	beego.BeegoServerName = config.AppConfig.ServerName
 	routers.LoadRouters()
 }
