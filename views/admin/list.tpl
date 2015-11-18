@@ -1,5 +1,5 @@
 <div id="primary" class="content-area col-md-9">
-  <div id="main" class="site-main" role="main">{{ .fuck }}
+  <div id="main" class="site-main" role="main">
 	{{ range $index, $blog := .Blogs }}
 	  <article class="post hentry">
 		<header class="entry-header">

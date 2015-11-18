@@ -31,3 +31,11 @@ func (a *AdminController) Get() {
 	a.Layout = "layout/admin.html"
 	a.TplNames = "admin/list.tpl"
 }
+
+func (a *AdminController) Create() {
+	a.AddJsScript("edit.js")
+	a.Data["fuck"] = "fuck"
+
+	a.Layout = "layout/admin.html"
+	a.TplNames = "admin/edit.tpl"
+}
