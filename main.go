@@ -28,5 +28,10 @@ func BeegoInit() {
 	beego.AppName = config.AppConfig.Name
 	beego.HttpPort = config.AppConfig.Port
 	beego.BeegoServerName = config.AppConfig.ServerName
+	beego.SessionOn = true
+	beego.SessionName = "ckeyer"
+	// beego.SessionDomain = "fxgcj.org"
+	beego.SessionAutoSetCookie = true
+
 	routers.LoadRouters()
 }

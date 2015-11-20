@@ -108,6 +108,10 @@ p {
   p a:hover {
     color: #27ae60; }
 
+.label_article{
+  margin-left: 3px;
+}
+
 blockquote {
   quotes: none; }
   blockquote:before {

@@ -4,7 +4,7 @@
 
 		<div class="input-group">
 		  <span class="input-group-addon">标题</span>
-		  <input type="text" class="form-control" placeholder="标题">
+		  <input type="text" id="article_title" class="form-control" placeholder="标题">
 		</div>
 		
 		<p>
@@ -29,20 +29,20 @@
 	
 	    <p>
 	    	<h4></h4>
-	    	<textarea class="form-control" rows="2" placeholder="摘要"></textarea>
+	    	<textarea class="form-control" id="article_summary" rows="2" placeholder="摘要"></textarea>
 	    </p>
 
 	    <p>
 	    	<h4></h4>
-	    	<textarea class="form-control" rows="30" placeholder="正文"></textarea>
+	    	<textarea class="form-control" id="article_content" rows="30" placeholder="正文"></textarea>
 	    </p>
 
 	    <p>
 			<div class="input-group">
 			  <span class="input-group-btn">
-	       		 <button class="btn btn-default" type="button">创建文章</button>
+	       		 <button id="article_commit" class="btn btn-default" type="button">创建文章</button>
 		      </span>
-		     	 <input type="text" placeholder="切口： 1+2=？">	
+		     	 <input type="text" id="commit_secret" placeholder="切口： {{.a}}+{{.b}}=？">	
 	    </p>
 	</article><!-- #post-## -->
   </div>

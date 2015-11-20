@@ -1,7 +1,9 @@
 package controllers
 
 import (
-// "github.com/fxgcj/website/models"
+	"github.com/ckeyer/commons/lib"
+
+	"github.com/fxgcj/website/models"
 )
 
 type AdminController struct {
@@ -33,9 +35,33 @@ func (a *AdminController) Get() {
 }
 
 func (a *AdminController) Create() {
-	a.AddJsScript("edit.js")
+	a.AddJsScript("md5.js", "edit.js")
 	a.Data["fuck"] = "fuck"
+
+	key_a := lib.RandomInt(5, 49)
+	a.SetSession("a", key_a)
+	a.Data["a"] = key_a
+	key_b := lib.RandomInt(5, 50)
+	a.SetSession("b", key_b)
+	a.Data["b"] = key_b
 
 	a.Layout = "layout/admin.html"
 	a.TplNames = "admin/edit.tpl"
+}
+
+func (a *AdminController) Post() {
+	var blog models.Blog
+	log.Debug("a = ", a.GetSession("a"))
+	log.Debug("b = ", a.GetSession("b"))
+
+	if err := a.ParseForm(&blog); err != nil {
+		log.Error(err)
+	}
+	a.Ctx.Request.ParseForm()
+	log.Debug(blog)
+
+	for k, v := range a.Ctx.Request.Form {
+		log.Debug(k, "...", v)
+	}
+	a.Ctx.WriteString("content")
 }
