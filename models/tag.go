@@ -1,23 +1,33 @@
 package models
 
-// import (
-// 	. "github.com/fxgcj/website/modules"
-// )
+import (
+	"gopkg.in/mgo.v2/bson"
+	"sort"
+)
 
-// // GetAllTags ...
-// func GetAllTags() (ts []string) {
+type Tag struct {
+	ID      bson.ObjectId   `bson:"_id"`
+	Name    string          `bson:"name"`
+	BlogIDs []bson.ObjectId `bson:"blogs"`
+}
 
-// 	tags := MyPool.GetTags()
-// 	ts = make([]string, tags.Len())
-// 	for i, v := range tags.GetAll() {
-// 		ts[i] = v.Name
-// 	}
+type Tags []*Tag
 
-// 	return
-// }
+func (t Tags) Len() int {
+	return len(t)
+}
 
-// // GetBlogsByTag ...
-// func GetBlogsByTag(name string) (bs Blogs) {
-// 	tags := MyPool.GetTags()
-// 	return tags.GetByName(name).Blogs
-// }
+func (t Tags) Swap(a, b int) {
+	t[a], t[b] = t[b], t[a]
+}
+
+func (t Tags) Less(a, b int) bool {
+	if len(t[a].BlogIDs) < len(t[b].BlogIDs) {
+		return false
+	}
+	return true
+}
+
+func (t Tags) Sort() {
+	sort.Sort(t)
+}

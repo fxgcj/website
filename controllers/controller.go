@@ -1,11 +1,17 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/fxgcj/website/conf"
 	logpkg "github.com/fxgcj/website/lib/log"
+	"net/http"
 	"strings"
+)
+
+const (
+	PAGE_STEP = 7
 )
 
 var (
@@ -15,6 +21,28 @@ var (
 
 type Controller struct {
 	beego.Controller
+}
+
+func (c *Controller) WriteJSON(code int, data interface{}) {
+	c.Ctx.Output.SetStatus(code)
+	bs, err := json.Marshal(data)
+	if err != nil {
+		log.Error("WriteJSON Error.. Marshal err, ", err)
+	}
+	c.Ctx.ResponseWriter.Write(bs)
+	c.StopRun()
+}
+
+func (c *Controller) Error(code int, msg interface{}) {
+	data := make(map[string]string)
+	data["error"] = fmt.Sprint(msg)
+	c.WriteJSON(code, data)
+}
+
+func (c *Controller) WriteMsg(msg interface{}) {
+	data := make(map[string]string)
+	data["msg"] = fmt.Sprint(msg)
+	c.WriteJSON(http.StatusOK, data)
 }
 
 // 是否是通过允许的域名访问
