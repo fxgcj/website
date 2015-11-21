@@ -18,6 +18,6 @@ func LoadRouters() {
 	beego.Router("/blog/:id", &controllers.BlogController{})
 	beego.Router("/tag", &controllers.TagController{})
 	beego.Router("/category", &controllers.CategoryController{})
-	beego.Router("/archive/:year:int/:month:int", &controllers.ArchiveController{})
+	beego.Router("/:year:int/:month:int", &controllers.ArchiveController{})
 
 }

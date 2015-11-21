@@ -42,15 +42,13 @@
 			<p>
 				<h4>
 				</h4>
-				<textarea class="form-control" id="article_summary" rows="2" placeholder="摘要">
-				</textarea>
+				<textarea class="form-control" id="article_summary" rows="2" placeholder="摘要"></textarea>
 			</p>
 
 			<p>
 				<h4>
 				</h4>
-				<textarea class="form-control" id="article_content" rows="30" placeholder="正文">
-				</textarea>
+				<textarea class="form-control" id="article_content" rows="30" placeholder="正文"></textarea>
 			</p>
 
 			<p>

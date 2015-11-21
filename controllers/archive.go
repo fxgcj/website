@@ -2,6 +2,7 @@ package controllers
 
 import (
 	. "github.com/fxgcj/website/models"
+	"strconv"
 )
 
 type ArchiveController struct {
@@ -10,15 +11,15 @@ type ArchiveController struct {
 
 func (c *ArchiveController) Get() {
 
-	year := c.Ctx.Input.Param(":year")
-	month := c.Ctx.Input.Param(":month")
+	year, _ := strconv.Atoi(c.Ctx.Input.Param(":year"))
+	month, _ := strconv.Atoi(c.Ctx.Input.Param(":month"))
 
 	page, _ := c.GetInt("page")
 	if page > 0 {
 		page--
 	}
 	var begin, end int
-	blogs := GetBlogsGroup("tag", name)
+	blogs := GetBlogsMonth(year, month)
 	if count := len(blogs); count > (page+1)*PAGE_STEP {
 		begin = page * PAGE_STEP
 		end = begin + PAGE_STEP

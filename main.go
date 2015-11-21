@@ -7,7 +7,6 @@ import (
 	logpkg "github.com/fxgcj/website/lib/log"
 	"github.com/fxgcj/website/routers"
 	"gopkg.in/mgo.v2/bson"
-	"reflect"
 	"time"
 )
 
@@ -44,18 +43,17 @@ func BeegoInit() {
 		return mstr
 	})
 	beego.AddFuncMap("showDate", func(t time.Time) string {
-		return fmt.Sprintf("%d-%d-%d %d:%d", t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute())
+		return fmt.Sprintf("%d-%02d-%02d %02d:%02d", t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute())
 	})
 	beego.AddFuncMap("showObjectID", func(obj bson.ObjectId) string {
 		return obj.Hex()
 	})
-	beego.AddFuncMap("typeOf", func(obj interface{}) string {
-		if obj == nil {
-			fmt.Println("fuck")
-			return "is nil"
+	beego.AddFuncMap("setURLMonth", func(m int) string {
+		mstr := fmt.Sprint(m)
+		if len(mstr) == 6 {
+			return fmt.Sprintf("%s/%s", mstr[:4], mstr[4:])
 		}
-		typ := reflect.TypeOf(obj)
-		return typ.String()
+		return mstr
 	})
 
 	routers.LoadRouters()

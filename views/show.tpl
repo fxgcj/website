@@ -15,13 +15,13 @@
 	  <footer class="entry-footer">
 		<ul class="post-categories">
           {{range .Blog.Category}}
-			<li><a href="/category/{{.}}" rel="category">{{.}}</a></li>
+			<li><a href="/category?name={{.}}" rel="category">{{.}}</a></li>
 			{{end}}
         </ul>
 		
 		<ul class="post-tags">
 		  {{range .Blog.Tags}}
-			<li><a href="/tag/{{.}}" rel="tag">{{.}}</a></li>
+			<li><a href="/tag?name={{.}}" rel="tag">{{.}}</a></li>
 			{{end}}
         </ul>
 		

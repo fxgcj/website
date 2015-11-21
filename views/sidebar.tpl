@@ -21,7 +21,7 @@
 			<h3 class="widget-title">文章归档</h3>
 			<ul>
 			  {{range .MonthBlog}}
-				<li><a href="/archive/{{.}}.html">{{showMonth .}}</a></li>
+				<li><a href="/{{setURLMonth .}}">{{showMonth .}}</a></li>
 				{{end}}
 			</ul>
 		  </aside>	<aside class="widget widget_recent_entries sidebar-widget clearfix">

@@ -94,6 +94,9 @@ func (b *Blog) Delete() (err error) {
 func (b *Blog) insertGroup() error {
 	db := mgodb.GetMongoDB()
 	for _, tag := range b.Tags {
+		if tag == "" {
+			continue
+		}
 		info, err := db.C(mgodb.C_TAGS).Upsert(bson.M{"name": tag},
 			bson.M{"$push": bson.M{"blogs": b.ID}})
 		if err != nil {
@@ -101,6 +104,9 @@ func (b *Blog) insertGroup() error {
 		}
 	}
 	for _, tag := range b.Category {
+		if tag == "" {
+			continue
+		}
 		info, err := db.C(mgodb.C_CATEGORY).Upsert(bson.M{"name": tag},
 			bson.M{"$push": bson.M{"blogs": b.ID}})
 		if err != nil {
