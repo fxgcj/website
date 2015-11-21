@@ -16,13 +16,13 @@
 		<footer class="entry-footer">
 		  <ul class="post-categories">
 			{{ range $i, $categ := $blog.Category }}
-			  <li><a href="/category?c={{$categ}}" rel="category">{{$categ}}</a></li>
+			  <li><a href="/category?name={{$categ}}" rel="category">{{$categ}}</a></li>
 			  {{end}}
           </ul>
 		  
 		  <ul class="post-tags">
 			{{range $i, $tag:= $blog.Tags }}
-			  <li><a href="/tag?t={{$tag}}" rel="tag">{{$tag}}</a></li>
+			  <li><a href="/tag?name={{$tag}}" rel="tag">{{$tag}}</a></li>
 			  {{end}}
           </ul>
 		  

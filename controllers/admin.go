@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/ckeyer/commons/lib"
+	"net/http"
 
 	"github.com/fxgcj/website/models"
 )
@@ -51,9 +52,36 @@ func (a *AdminController) Create() {
 
 func (a *AdminController) Post() {
 	var blog models.Blog
-	log.Debug("a = ", a.GetSession("a"))
-	log.Debug("b = ", a.GetSession("b"))
+	if err := a.ParseForm(&blog); err != nil {
+		log.Error(err)
+	}
+	blog.AuthorEndpoint = a.Ctx.Input.IP()
+	err := blog.Insert()
+	if err != nil {
+		log.Error("insert failed", err)
+		a.Error(http.StatusBadRequest, err)
+	}
+	log.Notice("Inserted a blog successful")
+	a.WriteMsg("inserted successful")
+}
 
+func (a *AdminController) Edit() {
+	a.AddJsScript("md5.js", "edit.js")
+	a.Data["fuck"] = "fuck"
+
+	key_a := lib.RandomInt(5, 49)
+	a.SetSession("a", key_a)
+	a.Data["a"] = key_a
+	key_b := lib.RandomInt(5, 50)
+	a.SetSession("b", key_b)
+	a.Data["b"] = key_b
+
+	a.Layout = "layout/admin.html"
+	a.TplNames = "admin/edit.tpl"
+}
+
+func (a *AdminController) Patch() {
+	var blog models.Blog
 	if err := a.ParseForm(&blog); err != nil {
 		log.Error(err)
 	}

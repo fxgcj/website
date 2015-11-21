@@ -1,7 +1,7 @@
 package controllers
 
 import (
-// "github.com/fxgcj/website/models"
+	. "github.com/fxgcj/website/models"
 )
 
 type BlogController struct {
@@ -10,22 +10,25 @@ type BlogController struct {
 
 // (b *BaseController)GetBlogs ...
 func (b *BlogController) Get() {
-	// b.Data["LastestBlogs"] = models.GetBlogs(0, 5)
-	// b.Data["Tags"] = models.GetAllTags()
-	// b.Data["Category"] = models.GetAllCategory()
-	// b.Data["MonthBlog"] = models.GetAllMonth()
 
-	// name := b.Ctx.Input.Param(":name")
-	// blog := models.GetBlog(name)
-	// if blog == nil {
-	// 	log.Debug("name: ", name)
-	// 	return
-	// }
-	// b.Data["Blog"] = blog
-	// b.Data["BContent"] = string(blog.Content)
+	id := b.Ctx.Input.Param(":id")
+	blog := GetBlogID(id)
+	if blog == nil {
+		log.Debug("id: ", id)
+		return
+	}
+	b.Data["Blog"] = blog
+	b.Data["BContent"] = string(blog.Content)
+	b.Data["DS_key"] = blog.ID.Hex()
+	log.Debug("DS_key: ", b.Data["DS_key"])
+	b.Data["DS_title"] = blog.Title
 
-	// b.LayoutSections["Sidebar"] = "sidebar.tpl"
-	// b.LayoutSections["Duoshuo"] = "duoshuo.tpl"
-	// b.TplNames = "admin/list.tpl"
-	b.Ctx.WriteString("content")
+	blogs := GetAllBlogs()
+	b.Data["LastestBlogs"] = blogs[:]
+	b.Data["Tags"] = GetAllTags()
+	b.Data["Category"] = GetAllCategories()
+	b.Data["MonthBlog"] = blogs.GetMonthSlice()
+
+	b.LayoutSections["Sidebar"] = "sidebar.tpl"
+	b.TplNames = "show.tpl"
 }
