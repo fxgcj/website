@@ -1,4 +1,10 @@
 {
+	"app":{
+		"mode":"dev",
+		"name":"fxgc",
+		"server_name":"ckeyer",
+		"port":8085
+		},
 	"website":{
 		"index_num": 7,
 		"lastest_num": 5,
