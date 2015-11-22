@@ -4,7 +4,7 @@ import (
 	"github.com/ckeyer/commons/lib"
 	"net/http"
 
-	"github.com/fxgcj/website/models"
+	. "github.com/fxgcj/website/models"
 )
 
 type AdminController struct {
@@ -12,32 +12,36 @@ type AdminController struct {
 }
 
 // (b *BaseController)GetBlogs ...
-func (a *AdminController) Get() {
-	// b.Data["LastestBlogs"] = models.GetBlogs(0, 5)
-	// b.Data["Tags"] = models.GetAllTags()
-	// b.Data["Category"] = models.GetAllCategory()
-	// b.Data["MonthBlog"] = models.GetAllMonth()
+func (c *AdminController) Get() {
+	page, _ := c.GetInt("page")
+	if page > 0 {
+		page--
+	}
+	var begin, end int
+	blogs := GetAllBlogs()
+	if count := len(blogs); count > (page+1)*PAGE_STEP {
+		begin = page * PAGE_STEP
+		end = begin + PAGE_STEP
+	} else if count < page*PAGE_STEP {
+		begin = (count / PAGE_STEP) * PAGE_STEP
+		end = count
+	} else {
+		begin = page * PAGE_STEP
+		end = count
+	}
 
-	// name := b.Ctx.Input.Param(":name")
-	// blog := models.GetBlog(name)
-	// if blog == nil {
-	// 	log.Debug("name: ", name)
-	// 	return
-	// }
-	// b.Data["Blog"] = blog
-	// b.Data["BContent"] = string(blog.Content)
-	log.Debug("fuck")
-	// b.LayoutSections["Sidebar"] = "sidebar.tpl"
-	// b.LayoutSections["Duoshuo"] = "duoshuo.tpl"
-	a.Data["fuck"] = "fuck"
+	c.Data["Blogs"] = blogs[begin:end]
+	c.Data["LastestBlogs"] = blogs[:]
+	c.Data["Tags"] = GetAllTags()
+	c.Data["Category"] = GetAllCategories()
+	c.Data["MonthBlog"] = blogs.GetMonthSlice()
 
-	a.Layout = "layout/admin.html"
-	a.TplNames = "admin/list.tpl"
+	c.Layout = "layout/admin.html"
+	c.TplNames = "admin/list.tpl"
 }
 
 func (a *AdminController) Create() {
 	a.AddJsScript("md5.js", "edit.js")
-	a.Data["fuck"] = "fuck"
 
 	key_a := lib.RandomInt(5, 49)
 	a.SetSession("a", key_a)
@@ -47,11 +51,11 @@ func (a *AdminController) Create() {
 	a.Data["b"] = key_b
 
 	a.Layout = "layout/admin.html"
-	a.TplNames = "admin/edit.tpl"
+	a.TplNames = "admin/create.tpl"
 }
 
 func (a *AdminController) Post() {
-	var blog models.Blog
+	var blog Blog
 	if err := a.ParseForm(&blog); err != nil {
 		log.Error(err)
 	}
@@ -66,8 +70,12 @@ func (a *AdminController) Post() {
 }
 
 func (a *AdminController) Edit() {
+	id := a.GetString("id")
+	blog := GetBlogID(id)
+	if blog == nil {
+		a.Error(http.StatusNotFound, "not found")
+	}
 	a.AddJsScript("md5.js", "edit.js")
-	a.Data["fuck"] = "fuck"
 
 	key_a := lib.RandomInt(5, 49)
 	a.SetSession("a", key_a)
@@ -76,12 +84,14 @@ func (a *AdminController) Edit() {
 	a.SetSession("b", key_b)
 	a.Data["b"] = key_b
 
+	a.Data["Blog"] = blog
+
 	a.Layout = "layout/admin.html"
 	a.TplNames = "admin/edit.tpl"
 }
 
 func (a *AdminController) Patch() {
-	var blog models.Blog
+	var blog Blog
 	if err := a.ParseForm(&blog); err != nil {
 		log.Error(err)
 	}
@@ -92,4 +102,13 @@ func (a *AdminController) Patch() {
 		log.Debug(k, "...", v)
 	}
 	a.Ctx.WriteString("content")
+}
+
+func (a *AdminController) Delete() {
+	id := a.GetString("id")
+	err := DeleteBlogID(id)
+	if err != nil {
+		a.Error(500, err)
+	}
+	a.WriteMsg("deleted successful")
 }

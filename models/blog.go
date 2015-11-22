@@ -44,6 +44,11 @@ func GetBlogID(id string) (b *Blog) {
 	return
 }
 
+func DeleteBlogID(id string) (err error) {
+	blog := &Blog{ID: bson.ObjectIdHex(id)}
+	return blog.Delete()
+}
+
 func (b *Blog) Insert() (err error) {
 	b.ID = bson.NewObjectId()
 	b.Created = time.Now()
