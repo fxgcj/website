@@ -3,9 +3,10 @@
 		"mode":"dev",
 		"name":"fxgc",
 		"server_name":"ckeyer",
-		"port":8085
+		"port":8086
 		},
 	"website":{
+		"commit_password":"wangcj",
 		"index_num": 7,
 		"lastest_num": 5,
 		"title":"风险观察",

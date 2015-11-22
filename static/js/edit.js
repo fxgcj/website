@@ -67,7 +67,7 @@
 			data: objData,
 			dataType: "text",
 			success: function(result){
-				console.log(result);
+				alert(result);
 			}
 		});
 	};
@@ -86,7 +86,7 @@
 			data: objData,
 			dataType: "text",
 			success: function(result){
-				console.log(result);
+				alert(result);
 			}
 		});
 	};

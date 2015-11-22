@@ -7,7 +7,7 @@
 				  <input name="keyword" id="keyword" type="text" placeholder="Search ...">
 				  <button class="fa fa-search">Search</button>
 				</div>
-			  	<img src="/static/img/wechat_qr.jpg">
+			  	<img src="http://moefq.com/images/2015/11/22/cd9ff66328c3383f232402ad166cffdb.jpg" alt="cd9ff66328c3383f232402ad166cffdb.jpg" border="0">
 			  </fieldset>
 			</form>
 		  </aside>

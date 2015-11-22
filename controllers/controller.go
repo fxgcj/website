@@ -36,6 +36,7 @@ func (c *Controller) WriteJSON(code int, data interface{}) {
 func (c *Controller) Error(code int, msg interface{}) {
 	data := make(map[string]string)
 	data["error"] = fmt.Sprint(msg)
+	log.Error("resp err ", data)
 	c.WriteJSON(code, data)
 }
 

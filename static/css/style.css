@@ -362,7 +362,11 @@ img {
   clip: rect(1px, 1px, 1px, 1px);
   width: 1px;
   height: 1px; }
-
+.entry-content img{
+  max-width: 60%;
+  max-height: auto;
+  text-align:center;
+}
 img.wp-smiley {
   margin-top: 0;
   margin-bottom: 0;

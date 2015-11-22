@@ -1,6 +1,9 @@
 package controllers
 
 import (
+	"crypto/md5"
+	"encoding/hex"
+	"fmt"
 	"github.com/ckeyer/commons/lib"
 	"net/http"
 
@@ -55,9 +58,13 @@ func (a *AdminController) Create() {
 }
 
 func (a *AdminController) Post() {
+
 	var blog Blog
 	if err := a.ParseForm(&blog); err != nil {
 		log.Error(err)
+	}
+	if !a.auth(blog.Secret) {
+		a.Error(404, "auth error")
 	}
 	blog.AuthorEndpoint = a.Ctx.Input.IP()
 	err := blog.Insert()
@@ -95,7 +102,9 @@ func (a *AdminController) Patch() {
 	if err := a.ParseForm(&blog); err != nil {
 		log.Error(err)
 	}
-	log.Debug(blog)
+	if !a.auth(blog.Secret) {
+		a.Error(404, "auth error")
+	}
 
 	id := a.GetString("id")
 	err := blog.UpdateID(id)
@@ -112,4 +121,22 @@ func (a *AdminController) Delete() {
 		a.Error(500, err)
 	}
 	a.WriteMsg("deleted successful")
+}
+
+func (a *AdminController) auth(sec_hash string) bool {
+	key_a := a.GetSession("a").(int)
+	key_b := a.GetSession("b").(int)
+
+	if commitSec(website.CommitPassword, key_a, key_b) == sec_hash {
+		return true
+	}
+	log.Debug("get session a=", key_a)
+	log.Debug("get session b=", key_b)
+	return false
+}
+
+func commitSec(sec string, a, b int) string {
+	h := md5.New()
+	h.Write([]byte(fmt.Sprint(sec, a+b)))
+	return hex.EncodeToString(h.Sum(nil))
 }
