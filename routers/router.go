@@ -33,7 +33,7 @@ var errtpl = `
     <head>
         <meta charset="utf-8">
         <title>Ckeyer - Error</title>
-        <link rel="stylesheet" href="/static/css/404.css">
+        <link rel="stylesheet" href="https://dn-ckeyer-css.qbox.me/404.css">
     </head>
     <body style="overflow: hidden;">
         
