@@ -84,8 +84,6 @@ func (a *AdminController) Edit() {
 	a.SetSession("b", key_b)
 	a.Data["b"] = key_b
 
-	a.Data["Blog"] = blog
-
 	a.Layout = "layout/admin.html"
 	a.TplNames = "admin/edit.tpl"
 }

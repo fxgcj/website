@@ -49,23 +49,27 @@
 				<h4>
 				</h4>
 				<textarea class="form-control" id="article_summary" rows="2" placeholder="摘要">{{.Blog.Summary}}</textarea>
+				<textarea class="form-control" id="article_summary" rows="2" placeholder="摘要"></textarea>
 			</p>
 
 			<p>
 				<h4>
 				</h4>
 				<textarea class="form-control" id="article_content" rows="30" placeholder="正文">{{.Blog.Source}}</textarea>
+				<textarea class="form-control" id="article_content" rows="30" placeholder="正文"></textarea>
 			</p>
 
 			<p>
 				<div class="input-group">
 					<span class="input-group-addon">来源</span>
 					<input type="text" id="article_link" class="form-control" placeholder="来源(原创请为空)" value="{{.Blog.Link}}">
+					<input type="text" id="article_link" class="form-control" placeholder="来源(原创请为空)">
 				</div>
 
 				<div class="input-group">
 					<span class="input-group-btn">
 						<button id="article_commit_update" class="btn btn-default" type="button">确认提交</button>
+						<button id="article_commit" class="btn btn-default" type="button">创建文章</button>
 					</span>
 					<input type="text" id="commit_secret" placeholder="切口： {{.a}}+{{.b}}=？">
 				</div>

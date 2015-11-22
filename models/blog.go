@@ -2,13 +2,12 @@ package models
 
 import (
 	"fmt"
-	"sort"
-	"strconv"
-	"time"
-
 	"github.com/fxgcj/website/lib/markdown"
 	"github.com/fxgcj/website/lib/mgodb"
 	"gopkg.in/mgo.v2/bson"
+	"sort"
+	"strconv"
+	"time"
 )
 
 type Blog struct {
