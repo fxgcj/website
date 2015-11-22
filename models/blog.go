@@ -2,12 +2,13 @@ package models
 
 import (
 	"fmt"
-	"github.com/fxgcj/website/lib/markdown"
-	"github.com/fxgcj/website/lib/mgodb"
-	"gopkg.in/mgo.v2/bson"
 	"sort"
 	"strconv"
 	"time"
+
+	"github.com/fxgcj/website/lib/markdown"
+	"github.com/fxgcj/website/lib/mgodb"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type Blog struct {
@@ -53,7 +54,7 @@ func (b *Blog) Insert() (err error) {
 	b.ID = bson.NewObjectId()
 	b.Created = time.Now()
 	b.Updated = time.Now()
-	b.Author = "lan"
+	b.Author = "风险观察君"
 	if len(b.Source) > 0 {
 		b.Content = markdown.Trans2html([]byte(b.Source))
 	}
@@ -66,7 +67,9 @@ func (b *Blog) Insert() (err error) {
 	return
 }
 
-func (b *Blog) Update() (err error) {
+func (b *Blog) UpdateID(id string) (err error) {
+	b.ID = bson.ObjectIdHex(id)
+	b.Created = time.Now()
 	b.Updated = time.Now()
 
 	if len(b.Source) > 0 {

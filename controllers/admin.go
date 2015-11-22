@@ -95,13 +95,14 @@ func (a *AdminController) Patch() {
 	if err := a.ParseForm(&blog); err != nil {
 		log.Error(err)
 	}
-	a.Ctx.Request.ParseForm()
 	log.Debug(blog)
 
-	for k, v := range a.Ctx.Request.Form {
-		log.Debug(k, "...", v)
+	id := a.GetString("id")
+	err := blog.UpdateID(id)
+	if err != nil {
+		a.Error(http.StatusBadRequest, err)
 	}
-	a.Ctx.WriteString("content")
+	a.WriteMsg("update successful")
 }
 
 func (a *AdminController) Delete() {

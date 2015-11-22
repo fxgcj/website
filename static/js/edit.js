@@ -3,6 +3,11 @@
 		$("#add_"+input_id).click(function(event) {
 			add_tag(input_id, tag_class);
 		});
+		$("#group_"+input_id+" .label_article").each(function() {
+			$(this).click(function(event) {
+				 $(this).remove();
+			});
+		});
 	};
 	var add_tag = function(input_id, tag_class){
 		var input_var = $("#input_"+input_id).val();
@@ -28,7 +33,7 @@
 			$("#group_"+input_id+" [value='"+input_var+"']").remove();
 		});
 	};
-	var post_article = function(){
+	var get_article_input = function(){
 		var title = $("#article_title").val();
 		var tags = new Array();
 		$("#group_article_tag .label_article").each(function(){
@@ -42,17 +47,8 @@
 		var content =  $("#article_content").val();
 		var link = $("#article_link").val();
 		var secret = $.md5($('#commit_secret').val());
-		// console.log("hero");
-		// console.log("title: "+title);
-		// console.log(tags);
-		// console.log(categories);
-		// console.log(summary);
-		// console.log(content);
-		// console.log(secret);
-		$.ajax({
-			type: 'POST',
-			url: '/admin',
-			data: {
+
+		var article = {
 				"title":title,
 				"tags":tags,
 				"category":categories,
@@ -60,7 +56,34 @@
 				"content":content,
 				"link":link,
 				"secret":secret
-			},
+			};
+		return article;
+	};
+	var create_article = function(){
+		var	objData = get_article_input();
+		$.ajax({
+			type: 'POST',
+			url: '/admin',
+			data: objData,
+			dataType: "text",
+			success: function(result){
+				console.log(result);
+			}
+		});
+	};
+	var get_URL_param = function(name){
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+		var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+		if (r!=null) 
+			return unescape(r[2]); 
+		return null; //返回参数值
+	};
+	var update_article = function(){
+		var	objData = get_article_input();
+		$.ajax({
+			type: 'PATCH',
+			url: '/admin?id='+get_URL_param("id"),
+			data: objData,
 			dataType: "text",
 			success: function(result){
 				console.log(result);
@@ -71,8 +94,11 @@
 		losd_edit: function() {
 			load_add_tag("article_tag","btn-danger");
 			load_add_tag("article_category","btn-info");
-			$("#article_commit").click(function(event) {
-				post_article();
+			$("#article_commit_create").click(function(event) {
+				create_article();
+			});
+			$("#article_commit_update").click(function(event) {
+				update_article();
 			});
 			$(".group_article_category_useful").click(function(event) {
 				$("#input_article_category").val($(this).text());

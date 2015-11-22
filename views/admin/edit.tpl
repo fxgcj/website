@@ -4,7 +4,7 @@
 
 			<div class="input-group">
 				<span class="input-group-addon">标题</span>
-				<input type="text" id="article_title" class="form-control" placeholder="标题">
+				<input type="text" id="article_title" class="form-control" placeholder="标题" value="{{ .Blog.Title }}">
 			</div>
 			<p>
 				<div class="input-group">
@@ -25,6 +25,9 @@
 
 				</div>
 				<span id="group_article_category">
+					{{range $i, $tag := .Blog.Category }}
+						<button type="button" class="btn btn-xs label_article btn-info" value="{{$tag}}">{{$tag}}   ×</button>
+					{{end}}
 				</span>
 			</p>
 
@@ -36,30 +39,33 @@
 					<input type="text" id="input_article_tag" class="form-control" placeholder="添加关键词标签">
 				</div>
 				<span id="group_article_tag">
+					{{range $i, $tag := .Blog.Tags }}
+						<button type="button" class="btn btn-xs label_article btn-danger" value="{{$tag}}">{{$tag}}   ×</button>
+					{{end}}
 				</span>
 			</p>
 
 			<p>
 				<h4>
 				</h4>
-				<textarea class="form-control" id="article_summary" rows="2" placeholder="摘要"></textarea>
+				<textarea class="form-control" id="article_summary" rows="2" placeholder="摘要">{{.Blog.Summary}}</textarea>
 			</p>
 
 			<p>
 				<h4>
 				</h4>
-				<textarea class="form-control" id="article_content" rows="30" placeholder="正文"></textarea>
+				<textarea class="form-control" id="article_content" rows="30" placeholder="正文">{{.Blog.Source}}</textarea>
 			</p>
 
 			<p>
 				<div class="input-group">
 					<span class="input-group-addon">来源</span>
-					<input type="text" id="article_link" class="form-control" placeholder="来源(原创请为空)">
+					<input type="text" id="article_link" class="form-control" placeholder="来源(原创请为空)" value="{{.Blog.Link}}">
 				</div>
 
 				<div class="input-group">
 					<span class="input-group-btn">
-						<button id="article_commit" class="btn btn-default" type="button">确认提交</button>
+						<button id="article_commit_update" class="btn btn-default" type="button">确认提交</button>
 					</span>
 					<input type="text" id="commit_secret" placeholder="切口： {{.a}}+{{.b}}=？">
 				</div>

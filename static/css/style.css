@@ -134,7 +134,7 @@ blockquote {
     margin-top: 0; }
 
   a {
-	  color:#27ae60;
+	  color:rgb(95, 156, 239);
   text-decoration: none; }
   a:hover {
     text-decoration: none;
@@ -237,7 +237,7 @@ q:after {
   margin-left: 3px; }
 
 tt, kbd, pre, code, samp, var {
-  color: #c7254e;
+  /*color: #c7254e;*/
   background-color: #f0f0f0;
   font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, monospace;
   padding: 4px 6px;

@@ -7,9 +7,11 @@
 				  <input name="keyword" id="keyword" type="text" placeholder="Search ...">
 				  <button class="fa fa-search">Search</button>
 				</div>
+			  	<img src="/static/img/wechat_qr.jpg">
 			  </fieldset>
 			</form>
-		  </aside>	<aside class="widget widget_categories sidebar-widget clearfix">
+		  </aside>
+		  <aside class="widget widget_categories sidebar-widget clearfix">
 			<h3 class="widget-title">分类目录</h3>
 			<ul>
 			  {{range $i, $tag := .Category}}
@@ -43,7 +45,7 @@
 		  <aside class="widget widget_text sidebar-widget clearfix">
 			<h3 class="widget-title">介绍</h3>
 			<div class="textwidget">
-			  <p>生命不息，折腾不止</p>
+			  <p>您好，欢迎关注“风险观察君”！我是小编观察君，从风险视角观察和分析社会问题，主要关注领域：安全学校，社会稳评，风险评估，风险管理，舆情分析，企业风险，等等。目前本公众号尚在初步建设中，更多功能将逐步完善与开放，敬请持续关注！</p>
 			</div>
 		  </aside>
 		</div>

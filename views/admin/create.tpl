@@ -59,7 +59,7 @@
 
 				<div class="input-group">
 					<span class="input-group-btn">
-						<button id="article_commit" class="btn btn-default" type="button">确认提交</button>
+						<button id="article_commit_create" class="btn btn-default" type="button">确认提交</button>
 					</span>
 					<input type="text" id="commit_secret" placeholder="切口： {{.a}}+{{.b}}=？">
 				</div>
