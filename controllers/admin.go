@@ -114,11 +114,25 @@ func (a *AdminController) Patch() {
 	a.WriteMsg("update successful")
 }
 
+func (a *AdminController) Secret() {
+	m := make(map[string]int)
+	m["a"] = lib.RandomInt(5, 49)
+	a.SetSession("a", m["a"])
+	m["b"] = lib.RandomInt(5, 50)
+	a.SetSession("b", m["b"])
+
+	a.WriteJSON(http.StatusOK, m)
+}
+
 func (a *AdminController) Delete() {
 	id := a.GetString("id")
+	sec := a.GetString("secret")
+	if !a.auth(sec) {
+		a.Error(404, "auth error")
+	}
 	err := DeleteBlogID(id)
 	if err != nil {
-		a.Error(500, err)
+		a.Error(404, err)
 	}
 	a.WriteMsg("deleted successful")
 }

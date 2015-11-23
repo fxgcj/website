@@ -1,7 +1,7 @@
 {
 	"app":{
 		"mode":"dev",
-		"name":"fxgc",
+		"name":"www.fxgc",
 		"server_name":"ckeyer",
 		"port":8086
 		},
@@ -15,9 +15,9 @@
 			"学校安全",
 			"实事"
 		],
-		"description":"热眼看社会，冷眼看风险。涉及领域：安全学校，社会稳评，风险评估，风险管理，舆情分析，企业风险，时评杂谈。",
-		"host_url":"http://fxgc.org/",
-		"file_url":"http://fxgc.org/",
+		"description":"热眼看社会，冷眼看风险。",
+		"host_url":"http://www.fxgc.org/",
+		"file_url":"http://www.fxgc.org/",
 		"js_url":"/static/js/",
 		"img_url":"/static/img/",
 		"css_url":"/static/css/",
