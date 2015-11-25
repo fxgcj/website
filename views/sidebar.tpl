@@ -45,7 +45,7 @@
 		  <aside class="widget widget_text sidebar-widget clearfix">
 			<h3 class="widget-title">介绍</h3>
 			<div class="textwidget">
-			  <p>关注领域：安全学校，社会稳评，风险评估，风险管理，舆情分析，企业风险，等等。目前本公众号尚在初步建设中，更多功能将逐步完善与开放，敬请持续关注！</p>
+			  <p>关注领域：安全学校，社会稳评，风险评估，风险管理，舆情分析，企业风险，等等。目前本站尚在初步建设中，更多功能将逐步完善与开放，敬请持续关注！</p>
 			</div>
 		  </aside>
 		</div>
