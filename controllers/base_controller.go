@@ -11,6 +11,10 @@ type BaseController struct {
 }
 
 func (b *BaseController) Prepare() {
+	b.InitWebPage()
+}
+
+func (b *BaseController) InitWebPage() {
 	website = conf.GetConf().WebSite
 
 	b.Ctx.Request.Header.Add("Access-Control-Allow-Origin", "*")

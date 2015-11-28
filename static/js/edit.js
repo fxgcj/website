@@ -90,6 +90,23 @@
 			}
 		});
 	};
+	var login_submit = function(){
+		var objData = {
+			"password":$.md5($('#login_passowrd').val()),
+			"remember":$("#login_remember").val()
+		};
+		console.log(objData);
+		$.ajax({
+			type: 'POST',
+			url: '/admin/login',
+			data: objData,
+			dataType: "text",
+			success: function(result){
+				alert(result);
+				window.location.reload();
+			}
+		});
+	}
 	$.extend({
 		losd_edit: function() {
 			load_add_tag("article_tag","btn-danger");
@@ -103,6 +120,9 @@
 			$(".group_article_category_useful").click(function(event) {
 				$("#input_article_category").val($(this).text());
 				add_tag("article_category","btn-info");
+			});
+			$("#login_submit").click(function(event) {
+				login_submit();
 			});
 			console.log("load...");
 		}

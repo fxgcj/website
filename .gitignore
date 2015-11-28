@@ -3,6 +3,7 @@
 *.a
 *.so
 .fuse*
+conf/v2.json
 fx
 app
 goblog

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/ckeyer/commons/lib"
 	"github.com/fxgcj/website/conf"
 	logpkg "github.com/fxgcj/website/lib/log"
 	"net/http"
@@ -12,6 +13,9 @@ import (
 
 const (
 	PAGE_STEP = 7
+
+	COOKIE_SECRET     = "cookie_secret"
+	COOKIE_SECRET_LEN = 15
 )
 
 var (
@@ -76,6 +80,26 @@ func (c *Controller) AddKeyWord(args ...string) {
 	} else {
 		c.SetKeyWord(args...)
 	}
+}
+
+// get cookie's secret from session or create
+func (c *Controller) getCookieSecret() string {
+	cscret := c.GetSession(COOKIE_SECRET)
+	if cscret != nil && len(cscret.(string)) == COOKIE_SECRET_LEN {
+		return cscret.(string)
+	} else {
+		s := lib.RandomString(COOKIE_SECRET_LEN)
+		c.SetSession(COOKIE_SECRET, s)
+		return s
+	}
+}
+
+func (c *Controller) SetCookie(key, value string, others ...interface{}) {
+	c.SetSecureCookie(c.getCookieSecret(), key, value, others...)
+}
+
+func (c *Controller) GetCookie(key string) (string, bool) {
+	return c.GetSecureCookie(c.getCookieSecret(), key)
 }
 
 // (b *Controller)SetDescript 设置Mets描述
