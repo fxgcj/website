@@ -27,8 +27,9 @@ func (b *BaseController) InitWebPage() {
 	}
 
 	b.Data["WebSite"] = website
+	b.Data["WebsiteName"] = website.Title
 	b.Data["HostUrl"] = website.HostUrl
-	b.SetPageTitle(website.Title)
+	b.SetPageTitle("首页")
 	b.SetDescript(website.Description)
 	b.AddKeyWord(website.Keywords...)
 

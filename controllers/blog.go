@@ -17,6 +17,10 @@ func (b *BlogController) Get() {
 		log.Debug("id: ", id)
 		return
 	}
+	b.SetPageTitle(blog.Title)
+	b.AddKeyWord(blog.Tags...)
+	b.AddKeyWord(blog.Category...)
+	b.SetDescript(blog.Summary)
 	b.Data["Blog"] = blog
 	b.Data["BContent"] = string(blog.Content)
 	b.Data["DS_key"] = blog.ID.Hex()

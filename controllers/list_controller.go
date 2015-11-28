@@ -24,7 +24,7 @@ func (b *ListController) Prepare() {
 
 	b.Data["WebSite"] = website
 	b.Data["HostUrl"] = website.HostUrl
-	b.SetPageTitle(website.Title)
+	b.Data["WebsiteName"] = website.Title
 	b.SetDescript(website.Description)
 	b.AddKeyWord(website.Keywords...)
 

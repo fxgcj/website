@@ -27,6 +27,8 @@ func (c *TagController) Get() {
 		end = count
 	}
 
+	c.SetPageTitle(name)
+	c.AddKeyWord(name)
 	c.Data["Blogs"] = blogs[begin:end]
 	c.Data["LastestBlogs"] = blogs[:]
 	c.Data["Tags"] = GetAllTags()

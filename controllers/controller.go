@@ -64,7 +64,7 @@ func (c *Controller) IsAllowHost() bool {
 
 //  (b *Controller)SetPateTitle 设置页面显示标题
 func (c *Controller) SetPageTitle(title string) {
-	c.Data["PageTitle"] = title
+	c.Data["PageTitle"] = website.Title + " - " + title
 }
 
 // (b *Controller)SetKeyWord 设置或更新Meta关键字
