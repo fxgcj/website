@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/fxgcj/website/lib/markdown"
+	// "github.com/fxgcj/website/lib/markdown"
 	"github.com/fxgcj/website/lib/mgodb"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -41,7 +41,7 @@ func GetBlogID(id string) (b *Blog) {
 	if err != nil {
 		log.Error("get blog error, ", err)
 	}
-	log.Debugf("find blog , %#v", b)
+	//	log.Debugf("find blog , %#v", b)
 	return
 }
 
@@ -56,7 +56,7 @@ func (b *Blog) Insert() (err error) {
 	b.Updated = time.Now()
 	b.Author = "风险观察君"
 	if len(b.Source) > 0 {
-		b.Content = markdown.Trans2html([]byte(b.Source))
+		b.Content = []byte(b.Source) //markdown.Trans2html([]byte(b.Source))
 	}
 	db := mgodb.GetMongoDB()
 	err = db.C(mgodb.C_BLOGS).Insert(b)
@@ -73,7 +73,7 @@ func (b *Blog) UpdateID(id string) (err error) {
 	b.Updated = time.Now()
 
 	if len(b.Source) > 0 {
-		b.Content = markdown.Trans2html([]byte(b.Source))
+		b.Content = []byte(b.Source) //markdown.Trans2html([]byte(b.Source))
 	}
 	db := mgodb.GetMongoDB()
 	err = db.C(mgodb.C_BLOGS).UpdateId(b.ID, b)
