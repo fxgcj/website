@@ -30,7 +30,7 @@
 			<h3 class="widget-title">近期文章</h3>
 			<ul>
 			  {{range $i, $blog := .LastestBlogs}}
-			  <li><a href="/blog/{{showObjectID $blog.ID}}.html">{{$blog.Title}}</a></li>
+			  <li><a href="/blog/{{showObjectID $blog.ID}}">{{$blog.Title}}</a></li>
 			  {{end}}
     		</ul>
 		  </aside>
