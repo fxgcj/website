@@ -29,22 +29,27 @@ func (b *BaseController) InitWebPage() {
 	b.Data["WebSite"] = website
 	b.Data["WebsiteName"] = website.Title
 	b.Data["HostUrl"] = website.HostUrl
+	b.Data["Metes"] = ""
+	b.Data["Tail"] = `热眼看社会，冷眼看风险。`
 	b.SetPageTitle("首页")
 	b.SetDescript(website.Description)
 	b.AddKeyWord(website.Keywords...)
 
-	b.Data["Metes"] = ""
-	b.AddCustomCssStyle("//cdn.bootcss.com/bootstrap/3.3.5/css/", "bootstrap.min.css", "bootstrap-theme.min.css")
-	b.AddCustomCssStyle("//cdn.bootcss.com/font-awesome/4.4.0/css/", "font-awesome.min.css")
+	// 七牛库
+	b.AddCustomCssStyle("http://7xih3t.com1.z0.glb.clouddn.com/",
+		"bootstrap.min.css", "bootstrap-theme.min.css", "font-awesome.min.css")
+	b.AddCustomJsScript("http://7xih3s.com1.z0.glb.clouddn.com/",
+		"jquery-2.1.3.min.js", "bootstrap.min.js", "jquery-migrate.1.2.1.min.js", "wow1.1.2.js")
+
+	// bootstrap CDN源
+	// b.AddCustomCssStyle("//cdn.bootcss.com/bootstrap/3.3.5/css/", "bootstrap.min.css", "bootstrap-theme.min.css")
+	// b.AddCustomCssStyle("//cdn.bootcss.com/font-awesome/4.4.0/css/", "font-awesome.min.css")
+
+	// b.AddCustomJsScript("//cdn.bootcss.com/jquery/2.1.4/", "jquery.min.js")
+	// b.AddCustomJsScript("//cdn.bootcss.com/bootstrap/3.3.5/js/", "bootstrap.min.js")
+	// b.AddCustomJsScript("//cdn.bootcss.com/jquery-migrate/1.2.1/", "jquery-migrate.min.js")
+	// b.AddCustomJsScript("//cdn.bootcss.com/wow/1.1.2/", "wow.min.js")
 	b.AddCssStyle("style.css")
-	//	b.AddCustomCssStyle("http://fonts.useso.com/", "css?family=Open+Sans:300,400,600&subset=latin,latin-ext")
-
-	b.AddCustomJsScript("//cdn.bootcss.com/jquery/2.1.4/", "jquery.min.js")
-	b.AddCustomJsScript("//cdn.bootcss.com/bootstrap/3.3.5/js/", "bootstrap.min.js")
-	b.AddCustomJsScript("//cdn.bootcss.com/jquery-migrate/1.2.1/", "jquery-migrate.min.js")
-	b.AddCustomJsScript("//cdn.bootcss.com/wow/1.1.2/", "wow.min.js")
-
-	b.Data["Tail"] = `热眼看社会，冷眼看风险。`
 
 	b.LayoutSections = make(map[string]string)
 
