@@ -22,7 +22,7 @@ func (b *BaseController) InitWebPage() {
 	// 验证是否来自合法域名访问
 	if !b.IsAllowHost() {
 		b.Ctx.WriteString(`<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=` +
-			website.HostUrl + string([]byte(b.Ctx.Input.Url())[4:]) + `" /></head></html>`)
+			website.HostUrl + string([]byte(b.Ctx.Input.Url())) + `" /></head></html>`)
 		b.StopRun()
 	}
 
