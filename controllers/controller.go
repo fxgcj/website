@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/ckeyer/commons/lib"
 	"github.com/fxgcj/website/conf"
 	logpkg "github.com/fxgcj/website/lib/log"
 	"net/http"
@@ -12,6 +13,9 @@ import (
 
 const (
 	PAGE_STEP = 7
+
+	COOKIE_SECRET     = "cookie_secret"
+	COOKIE_SECRET_LEN = 15
 )
 
 var (
@@ -36,6 +40,7 @@ func (c *Controller) WriteJSON(code int, data interface{}) {
 func (c *Controller) Error(code int, msg interface{}) {
 	data := make(map[string]string)
 	data["error"] = fmt.Sprint(msg)
+	log.Error("resp err ", data)
 	c.WriteJSON(code, data)
 }
 
@@ -59,7 +64,7 @@ func (c *Controller) IsAllowHost() bool {
 
 //  (b *Controller)SetPateTitle 设置页面显示标题
 func (c *Controller) SetPageTitle(title string) {
-	c.Data["PageTitle"] = title
+	c.Data["PageTitle"] = website.Title + " - " + title
 }
 
 // (b *Controller)SetKeyWord 设置或更新Meta关键字
@@ -75,6 +80,26 @@ func (c *Controller) AddKeyWord(args ...string) {
 	} else {
 		c.SetKeyWord(args...)
 	}
+}
+
+// get cookie's secret from session or create
+func (c *Controller) getCookieSecret() string {
+	cscret := c.GetSession(COOKIE_SECRET)
+	if cscret != nil && len(cscret.(string)) == COOKIE_SECRET_LEN {
+		return cscret.(string)
+	} else {
+		s := lib.RandomString(COOKIE_SECRET_LEN)
+		c.SetSession(COOKIE_SECRET, s)
+		return s
+	}
+}
+
+func (c *Controller) SetCookie(key, value string, others ...interface{}) {
+	c.SetSecureCookie(c.getCookieSecret(), key, value, others...)
+}
+
+func (c *Controller) GetCookie(key string) (string, bool) {
+	return c.GetSecureCookie(c.getCookieSecret(), key)
 }
 
 // (b *Controller)SetDescript 设置Mets描述

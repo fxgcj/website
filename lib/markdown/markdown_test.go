@@ -10,11 +10,12 @@ func TestMarkdown(t *testing.T) {
 
 * hahah[click](http://www.ckeyer.com/)
 * hahah[click](http://www.ckeyer.com/)
+* Hello[hello](#hello)
 
 <h2>logo</h2>
 <image src="http://www.ckeyer.com/static/img/logo.png"/>
 
-### hello world
+# hello
 
 hello, this  is a test...
 

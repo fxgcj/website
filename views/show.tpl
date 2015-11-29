@@ -2,7 +2,7 @@
   <div id="main" class="site-main" role="main">
 	<article class="post hentry">
 	  <header class="entry-header">
-		<h1 class="post-title"><a href="/{{.Blog.Name}}.html" rel="bookmark">{{.Blog.Title}}</a></h1>
+		<h1 class="post-title"><a href="/blog/{{showObjectID .Blog.ID}}" rel="bookmark">{{.Blog.Title}}</a></h1>
 		<div class="entry-meta">
 		  <time class="post-date"><i class="fa fa-clock-o"></i>{{ showDate .Blog.Created}}</time>
 		  <span class="seperator">/</span>

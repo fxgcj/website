@@ -17,8 +17,12 @@
 					    <span class="caret"></span>
 					  </button>
 					  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-					    <li><a class="group_article_category_useful">分享</a></li>
-					    <li><a class="group_article_category_useful">原创</a></li>
+					    <li><a class="group_article_category_useful">自然风险</a></li>
+					    <li><a class="group_article_category_useful">社会风险</a></li>
+					    <li><a class="group_article_category_useful">政治风险</a></li>
+					    <li><a class="group_article_category_useful">法律风险</a></li>
+					    <li><a class="group_article_category_useful">经济风险</a></li>
+					    <li><a class="group_article_category_useful">技术风险</a></li>
 					  </ul>
 					</span>
 					<input type="text" id="input_article_category" class="form-control" placeholder="添加所属类别">

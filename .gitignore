@@ -3,10 +3,15 @@
 *.a
 *.so
 .fuse*
+conf/v2.json
 fx
 app
 goblog
+fxgc
+fxgcj
 blog
+*.json
+app.conf
 .DS_Store
 \#*
 .\#*

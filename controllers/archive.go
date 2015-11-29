@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	. "github.com/fxgcj/website/models"
 	"strconv"
 )
@@ -31,6 +32,7 @@ func (c *ArchiveController) Get() {
 		end = count
 	}
 
+	c.SetPageTitle(fmt.Sprintf("%d年%d月", year, month))
 	c.Data["Blogs"] = blogs[begin:end]
 	c.Data["LastestBlogs"] = blogs[:]
 	c.Data["Tags"] = GetAllTags()

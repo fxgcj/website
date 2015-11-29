@@ -24,7 +24,7 @@ func (b *ListController) Prepare() {
 
 	b.Data["WebSite"] = website
 	b.Data["HostUrl"] = website.HostUrl
-	b.SetPageTitle(website.Title)
+	b.Data["WebsiteName"] = website.Title
 	b.SetDescript(website.Description)
 	b.AddKeyWord(website.Keywords...)
 
@@ -39,7 +39,7 @@ func (b *ListController) Prepare() {
 	b.AddCustomCssStyle("//cdn.bootcss.com/jquery-migrate/1.2.1/", "jquery-migrate.min.js")
 	b.AddCustomJsScript("//cdn.bootcss.com/wow/1.1.2/", "wow.min.js")
 
-	b.Data["Tail"] = `Download your use my life`
+	b.Data["Tail"] = `热眼看社会，冷眼看风险。`
 
 	b.LayoutSections = make(map[string]string)
 

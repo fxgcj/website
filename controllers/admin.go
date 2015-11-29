@@ -1,14 +1,47 @@
 package controllers
 
 import (
-	"github.com/ckeyer/commons/lib"
 	"net/http"
 
 	. "github.com/fxgcj/website/models"
 )
 
 type AdminController struct {
-	BaseController
+	AdminBaseController
+}
+
+func (a *AdminController) Login() {
+	switch a.Ctx.Input.Method() {
+	case "POST":
+		a.postLogin()
+	case "GET":
+		a.getLogin()
+	default:
+		a.Error(http.StatusMethodNotAllowed, "ali")
+	}
+}
+func (a *AdminController) postLogin() {
+	var form struct {
+		Passowrd string `form:"password"`
+		Remember bool   `form:"remember"`
+	}
+	a.ParseForm(&form)
+	log.Debug(form)
+
+	if a.verifyA_B(form.Passowrd) {
+		if form.Remember {
+			a.SetCookie(COOKIE_IS_LOGINED, "true", 60*60*24*365)
+		} else {
+			a.SetCookie(COOKIE_IS_LOGINED, "true")
+		}
+		a.WriteMsg("login successful")
+	}
+	a.Error(http.StatusBadRequest, "login error")
+}
+func (a *AdminController) getLogin() {
+	a.AddJsScript("md5.js", "edit.js")
+	a.setA_B()
+	a.TplNames = "admin/login.tpl"
 }
 
 // (b *BaseController)GetBlogs ...
@@ -43,12 +76,7 @@ func (c *AdminController) Get() {
 func (a *AdminController) Create() {
 	a.AddJsScript("md5.js", "edit.js")
 
-	key_a := lib.RandomInt(5, 49)
-	a.SetSession("a", key_a)
-	a.Data["a"] = key_a
-	key_b := lib.RandomInt(5, 50)
-	a.SetSession("b", key_b)
-	a.Data["b"] = key_b
+	a.setA_B()
 
 	a.Layout = "layout/admin.html"
 	a.TplNames = "admin/create.tpl"
@@ -58,6 +86,9 @@ func (a *AdminController) Post() {
 	var blog Blog
 	if err := a.ParseForm(&blog); err != nil {
 		log.Error(err)
+	}
+	if !a.verifyA_B(blog.Secret) {
+		a.Error(404, "auth error")
 	}
 	blog.AuthorEndpoint = a.Ctx.Input.IP()
 	err := blog.Insert()
@@ -77,13 +108,7 @@ func (a *AdminController) Edit() {
 	}
 	a.AddJsScript("md5.js", "edit.js")
 
-	key_a := lib.RandomInt(5, 49)
-	a.SetSession("a", key_a)
-	a.Data["a"] = key_a
-	key_b := lib.RandomInt(5, 50)
-	a.SetSession("b", key_b)
-	a.Data["b"] = key_b
-
+	a.setA_B()
 	a.Data["Blog"] = blog
 
 	a.Layout = "layout/admin.html"
@@ -95,7 +120,9 @@ func (a *AdminController) Patch() {
 	if err := a.ParseForm(&blog); err != nil {
 		log.Error(err)
 	}
-	log.Debug(blog)
+	if !a.verifyA_B(blog.Secret) {
+		a.Error(404, "auth error")
+	}
 
 	id := a.GetString("id")
 	err := blog.UpdateID(id)
@@ -107,9 +134,13 @@ func (a *AdminController) Patch() {
 
 func (a *AdminController) Delete() {
 	id := a.GetString("id")
+	sec := a.GetString("secret")
+	if !a.verifyA_B(sec) {
+		a.Error(404, "auth error")
+	}
 	err := DeleteBlogID(id)
 	if err != nil {
-		a.Error(500, err)
+		a.Error(404, err)
 	}
 	a.WriteMsg("deleted successful")
 }

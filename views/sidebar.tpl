@@ -7,7 +7,7 @@
 				  <input name="keyword" id="keyword" type="text" placeholder="Search ...">
 				  <button class="fa fa-search">Search</button>
 				</div>
-			  	<img src="/static/img/wechat_qr.jpg">
+			  	<img src="http://moefq.com/images/2015/11/22/cd9ff66328c3383f232402ad166cffdb.jpg" alt="cd9ff66328c3383f232402ad166cffdb.jpg" border="0">
 			  </fieldset>
 			</form>
 		  </aside>
@@ -30,7 +30,7 @@
 			<h3 class="widget-title">近期文章</h3>
 			<ul>
 			  {{range $i, $blog := .LastestBlogs}}
-			  <li><a href="/blog/{{showObjectID $blog.ID}}.html">{{$blog.Title}}</a></li>
+			  <li><a href="/blog/{{showObjectID $blog.ID}}">{{$blog.Title}}</a></li>
 			  {{end}}
     		</ul>
 		  </aside>
@@ -45,7 +45,7 @@
 		  <aside class="widget widget_text sidebar-widget clearfix">
 			<h3 class="widget-title">介绍</h3>
 			<div class="textwidget">
-			  <p>您好，欢迎关注“风险观察君”！我是小编观察君，从风险视角观察和分析社会问题，主要关注领域：安全学校，社会稳评，风险评估，风险管理，舆情分析，企业风险，等等。目前本公众号尚在初步建设中，更多功能将逐步完善与开放，敬请持续关注！</p>
+			  <p>关注领域：安全学校，社会稳评，风险评估，风险管理，舆情分析，企业风险，等等。目前本站尚在初步建设中，更多功能将逐步完善与开放，敬请持续关注！</p>
 			</div>
 		  </aside>
 		</div>
