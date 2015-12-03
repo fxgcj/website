@@ -68,14 +68,23 @@ func (b *Blog) Insert() (err error) {
 }
 
 func (b *Blog) UpdateID(id string) (err error) {
-	b.ID = bson.ObjectIdHex(id)
-	b.Created = time.Now()
+	if !bson.IsObjectIdHex(id) {
+		return E_NOT_OBJ_ID
+	}
+	bid := bson.ObjectIdHex(id)
+	old := new(Blog)
+	db := mgodb.GetMongoDB()
+	err = db.C(mgodb.C_BLOGS).FindId(bid).One(old)
+	if err != nil {
+		return
+	}
+	b.Created = old.Created
+	b.Author = old.Author
 	b.Updated = time.Now()
 
 	if len(b.Source) > 0 {
 		b.Content = []byte(b.Source) //markdown.Trans2html([]byte(b.Source))
 	}
-	db := mgodb.GetMongoDB()
 	err = db.C(mgodb.C_BLOGS).UpdateId(b.ID, b)
 	if err != nil {
 		return err

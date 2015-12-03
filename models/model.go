@@ -1,12 +1,16 @@
 package models
 
 import (
+	"errors"
 	logpkg "github.com/fxgcj/website/lib/log"
 	"github.com/fxgcj/website/lib/mgodb"
 	"gopkg.in/mgo.v2/bson"
 	"time"
 )
 
+var (
+	E_NOT_OBJ_ID = errors.New("not an bson object id")
+)
 var (
 	log = logpkg.GetLogger()
 )
