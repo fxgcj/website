@@ -29,7 +29,7 @@ type Blog struct {
 	// .md 源文件
 	Source string `json:"source" bson:"source" form:"content"`
 	// .html 文件
-	Content []byte `json:"content" bson:"content" form:"-"`
+	Content string `json:"content" bson:"content" form:"-"`
 }
 
 func GetBlogID(id string) (b *Blog) {
@@ -54,7 +54,7 @@ func (b *Blog) Insert() (err error) {
 	b.Updated = time.Now()
 	b.Author = "风险观察君"
 	if len(b.Source) > 0 {
-		b.Content = []byte(b.Source) //markdown.Trans2html([]byte(b.Source))
+		b.Content = b.Source //markdown.Trans2html([]byte(b.Source))
 	}
 	db := mgodb.GetMongoDB()
 	err = db.C(mgodb.C_BLOGS).Insert(b)
@@ -83,7 +83,7 @@ func (b *Blog) UpdateID(id string) (err error) {
 	b.Updated = time.Now()
 
 	if len(b.Source) > 0 {
-		b.Content = []byte(b.Source) //markdown.Trans2html([]byte(b.Source))
+		b.Content = b.Source //markdown.Trans2html([]byte(b.Source))
 	}
 	err = db.C(mgodb.C_BLOGS).UpdateId(b.ID, b)
 	if err != nil {

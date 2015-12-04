@@ -9,13 +9,13 @@ type SearchController struct {
 }
 
 func (s *SearchController) Get() {
-	word := s.GetString("word")
+	keyword := s.GetString("keyword")
 	page, _ := s.GetInt("page")
 	if page > 0 {
 		page--
 	}
 	var begin, end int
-	blogs := GetBlogsGroup("category", word)
+	blogs := SearchBlogs(keyword)
 	if count := len(blogs); count > (page+1)*PAGE_STEP {
 		begin = page * PAGE_STEP
 		end = begin + PAGE_STEP
@@ -27,8 +27,8 @@ func (s *SearchController) Get() {
 		end = count
 	}
 
-	s.SetPageTitle(word)
-	s.AddKeyWord(word)
+	s.SetPageTitle(keyword)
+	s.AddKeyWord(keyword)
 	s.Data["Blogs"] = blogs[begin:end]
 	s.Data["LastestBlogs"] = blogs[:]
 	s.Data["Tags"] = GetAllTags()

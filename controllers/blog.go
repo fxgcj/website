@@ -22,7 +22,7 @@ func (b *BlogController) Get() {
 	b.AddKeyWord(blog.Category...)
 	b.SetDescript(blog.Summary)
 	b.Data["Blog"] = blog
-	b.Data["BContent"] = string(blog.Content)
+	b.Data["BContent"] = blog.Content
 	b.Data["DS_key"] = blog.ID.Hex()
 	log.Debug("DS_key: ", b.Data["DS_key"])
 	b.Data["DS_title"] = blog.Title
