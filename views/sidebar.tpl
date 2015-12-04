@@ -48,4 +48,12 @@
 			  <p>关注领域：安全学校，社会稳评，风险评估，风险管理，舆情分析，企业风险，等等。目前本站尚在初步建设中，更多功能将逐步完善与开放，敬请持续关注！</p>
 			</div>
 		  </aside>
+		  <aside class="widget widget_categories sidebar-widget clearfix">
+			<h3 class="widget-title">友情链接</h3>
+			<ul>
+			  {{range $key, $val := .FriendLinks}}
+				<li class="cat-item"><a href="{{$val}}" target="_blank">{{ $key }}</a></li>
+				{{end}}
+			</ul>
+		  </aside>
 		</div>

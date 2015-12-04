@@ -32,19 +32,20 @@ type AppConfig struct {
 }
 
 type WebSite struct {
-	Title          string   `json:"title"`
-	Keywords       []string `json:"keywords"`
-	Description    string   `json:"description"`
-	CommitPassword string   `json:"commit_password"`
-	HostUrl        string   `json:"host_url"`
-	FileUrl        string   `json:"file_url"`
-	JsUrl          string   `json:"js_url"`
-	CssUrl         string   `json:"css_url"`
-	ImgUrl         string   `json:"img_url"`
-	CustomJsUrl    string   `json:"custom_js_url"`
-	CustomCssUrl   string   `json:"custom_css_url"`
-	CustomImgUrl   string   `json:"custom_img_url"`
-	EnableDomain   []string `json:"enable_domain"`
+	Title          string            `json:"title"`
+	Keywords       []string          `json:"keywords"`
+	Description    string            `json:"description"`
+	CommitPassword string            `json:"commit_password"`
+	HostUrl        string            `json:"host_url"`
+	FileUrl        string            `json:"file_url"`
+	JsUrl          string            `json:"js_url"`
+	CssUrl         string            `json:"css_url"`
+	ImgUrl         string            `json:"img_url"`
+	CustomJsUrl    string            `json:"custom_js_url"`
+	CustomCssUrl   string            `json:"custom_css_url"`
+	CustomImgUrl   string            `json:"custom_img_url"`
+	EnableDomain   []string          `json:"enable_domain"`
+	FriendLinks    map[string]string `json:"friend_links"`
 }
 
 type MongoDB struct {
