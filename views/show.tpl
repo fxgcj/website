@@ -10,7 +10,7 @@
 	    </div><!-- .entry-meta -->
 	  </header><!-- .entry-header -->
 	  <div class="entry-content">
-		{{str2html .BContent}}
+		{{str2html .Blog.Content}}
 	  </div><!-- .entry-content -->
 	  <footer class="entry-footer">
 		<ul class="post-categories">

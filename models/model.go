@@ -102,3 +102,18 @@ func GetMonthBlogs(year, month int) (blogs Blogs) {
 	log.Debug("get month, ", blogs)
 	return
 }
+
+func SearchBlogs(keyword string) (blogs Blogs) {
+	db := mgodb.GetMongoDB()
+	err := db.C(mgodb.C_BLOGS).Find(
+		bson.M{
+			"$or": []bson.M{bson.M{"source": bson.M{"$regex": keyword}},
+				bson.M{"title": bson.M{"$regex": keyword}},
+				bson.M{"summary": bson.M{"$regex": keyword}}},
+		}).Sort("-created").All(&blogs)
+	if err != nil {
+		log.Error("find month error, ", err)
+		return
+	}
+	return
+}

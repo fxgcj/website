@@ -15,6 +15,7 @@ func LoadRouters() {
 	log.Info("加载路由信息")
 
 	beego.Errorhandler("404", NotFound)
+	beego.Errorhandler("500", ServerErr)
 
 	// beego.SetStaticPath("/img", "blog/img")
 	beego.AutoRouter(&controllers.AdminController{})
@@ -24,6 +25,7 @@ func LoadRouters() {
 	beego.Router("/tag", &controllers.TagController{})
 	beego.Router("/category", &controllers.CategoryController{})
 	beego.Router("/:year:int/:month:int", &controllers.ArchiveController{})
+	beego.Router("/search", &controllers.SearchController{})
 
 }
 
@@ -65,6 +67,16 @@ func NotFound(rw http.ResponseWriter, r *http.Request) {
 	// template.New("sd").ParseFiles(...)
 	data := make(map[string]interface{})
 	data["Title"] = "Page Not Found"
+	data["Url"] = r.URL
+	//rw.WriteHeader(http.StatusNotFound)
+	t.Execute(rw, data)
+}
+
+func ServerErr(rw http.ResponseWriter, r *http.Request) {
+	t, _ := template.New("beegoerrortemp").Parse(errtpl)
+	// template.New("sd").ParseFiles(...)
+	data := make(map[string]interface{})
+	data["Title"] = "观察君出海去了呢"
 	data["Url"] = r.URL
 	//rw.WriteHeader(http.StatusNotFound)
 	t.Execute(rw, data)
