@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	confpath = ""
+	confpath = "conf/v2.json"
 	log      = logpkg.GetLogger()
 	config   *Config
 )

@@ -2,8 +2,6 @@ package models
 
 import (
 	"fmt"
-	"sort"
-	"strconv"
 	"time"
 
 	// "github.com/fxgcj/website/lib/markdown"
@@ -68,14 +66,25 @@ func (b *Blog) Insert() (err error) {
 }
 
 func (b *Blog) UpdateID(id string) (err error) {
-	b.ID = bson.ObjectIdHex(id)
-	b.Created = time.Now()
+	if !bson.IsObjectIdHex(id) {
+		return E_NOT_OBJ_ID
+	}
+	bid := bson.ObjectIdHex(id)
+	old := new(Blog)
+	db := mgodb.GetMongoDB()
+	err = db.C(mgodb.C_BLOGS).FindId(bid).One(old)
+	if err != nil {
+		return
+	}
+
+	b.ID = old.ID
+	b.Created = old.Created
+	b.Author = old.Author
 	b.Updated = time.Now()
 
 	if len(b.Source) > 0 {
 		b.Content = []byte(b.Source) //markdown.Trans2html([]byte(b.Source))
 	}
-	db := mgodb.GetMongoDB()
 	err = db.C(mgodb.C_BLOGS).UpdateId(b.ID, b)
 	if err != nil {
 		return err
@@ -121,40 +130,35 @@ func (b *Blog) insertGroup() error {
 			return fmt.Errorf("%s %s\n", info, err)
 		}
 	}
-	return nil
+
+	_, err := db.C(mgodb.C_MONTH).Upsert(bson.M{"name": fmt.Sprintf("%d-%d", b.Created.Year(), b.Created.Month())},
+		bson.M{"$push": bson.M{"blogs": b.ID}})
+
+	return err
 }
 
 // 移除文章所有标签
-func (b *Blog) removeAllGroup() (int, error) {
+func (b *Blog) removeAllGroup() (count int, err error) {
 	db := mgodb.GetMongoDB()
 	info, err := db.C(mgodb.C_TAGS).Upsert(nil,
 		bson.M{"$pull": bson.M{"blogs": b.ID}})
 	if err != nil {
-		return info.Removed, err
+		return
 	}
+	count = info.Removed
+
 	info, err = db.C(mgodb.C_CATEGORY).Upsert(nil,
 		bson.M{"$pull": bson.M{"blogs": b.ID}})
+	if err != nil {
+		return
+	}
+	count += info.Removed
 
-	return info.Removed, err
+	info, err = db.C(mgodb.C_MONTH).Upsert(nil, bson.M{"$pull": bson.M{"blogs": b.ID}})
+	return
 }
 
 type Blogs []*Blog
-
-func (b Blogs) GetMonthSlice() sort.IntSlice {
-	monthmap := make(map[int]int)
-	for _, v := range b {
-		y := v.Created.Year()
-		m := v.Created.Month()
-		t, _ := strconv.Atoi(fmt.Sprintf("%d%d", y, m))
-		monthmap[t]++
-	}
-	var ret sort.IntSlice
-	for k, _ := range monthmap {
-		ret = append(ret, k)
-	}
-	sort.Sort(&ret)
-	return ret
-}
 
 // // GetBlogs
 // func GetBlogs(start, count int) (bs []*Blog) {

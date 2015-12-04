@@ -31,7 +31,7 @@ func (b *BlogController) Get() {
 	b.Data["LastestBlogs"] = blogs[:]
 	b.Data["Tags"] = GetAllTags()
 	b.Data["Category"] = GetAllCategories()
-	b.Data["MonthBlog"] = blogs.GetMonthSlice()
+	b.Data["MonthBlog"] = GetAllMonth()
 
 	b.LayoutSections["Sidebar"] = "sidebar.tpl"
 	b.TplNames = "show.tpl"

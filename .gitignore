@@ -5,6 +5,7 @@
 .fuse*
 conf/v2.json
 fx
+website
 app
 goblog
 fxgc
