@@ -27,8 +27,7 @@ func (b *BlogController) Get() {
 	log.Debug("DS_key: ", b.Data["DS_key"])
 	b.Data["DS_title"] = blog.Title
 
-	blogs := GetAllBlogs()
-	b.Data["LastestBlogs"] = blogs[:]
+	b.Data["LastestBlogs"] = GetLatestBlogs()
 	b.Data["Tags"] = GetAllTags()
 	b.Data["Category"] = GetAllCategories()
 	b.Data["MonthBlog"] = GetAllMonth()
