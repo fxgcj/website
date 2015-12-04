@@ -33,7 +33,7 @@ func (s *SearchController) Get() {
 	s.Data["LastestBlogs"] = blogs[:]
 	s.Data["Tags"] = GetAllTags()
 	s.Data["Category"] = GetAllCategories()
-	s.Data["MonthBlog"] = blogs.GetMonthSlice()
+	s.Data["MonthBlog"] = GetAllMonth()
 
 	s.LayoutSections["Sidebar"] = "sidebar.tpl"
 	s.TplNames = "list.tpl"

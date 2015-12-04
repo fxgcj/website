@@ -67,7 +67,7 @@ func (c *AdminController) Get() {
 	c.Data["LastestBlogs"] = blogs[:]
 	c.Data["Tags"] = GetAllTags()
 	c.Data["Category"] = GetAllCategories()
-	c.Data["MonthBlog"] = blogs.GetMonthSlice()
+	c.Data["MonthBlog"] = GetAllMonth()
 
 	c.Layout = "layout/admin.html"
 	c.TplNames = "admin/list.tpl"
@@ -104,6 +104,7 @@ func (a *AdminController) Edit() {
 	id := a.GetString("id")
 	blog := GetBlogID(id)
 	if blog == nil {
+		log.Error("not found")
 		a.Error(http.StatusNotFound, "not found")
 	}
 	a.AddJsScript("md5.js", "edit.js")
@@ -127,6 +128,7 @@ func (a *AdminController) Patch() {
 	id := a.GetString("id")
 	err := blog.UpdateID(id)
 	if err != nil {
+		log.Error(err)
 		a.Error(http.StatusBadRequest, err)
 	}
 	a.WriteMsg("update successful")

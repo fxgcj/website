@@ -5,7 +5,7 @@
 		<header class="entry-header">
 		  <h1 class="post-title"><a href="/blog/{{ showObjectID $blog.ID }}" rel="bookmark">{{ $blog.Title }}</a></h1>
 		  <div class="entry-meta">
-			<time class="post-date"><i class="fa fa-clock-o"></i>{{ showDate $blog.Updated }}</time>
+			<time class="post-date"><i class="fa fa-clock-o"></i>{{ showDate $blog.Created }}</time>
 			<span class="seperator">/</span>
 			<span><i class="fa fa-user"></i> {{ $blog.Author }}</span>
 	      </div>

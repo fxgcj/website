@@ -33,7 +33,7 @@ func (c *TagController) Get() {
 	c.Data["LastestBlogs"] = blogs[:]
 	c.Data["Tags"] = GetAllTags()
 	c.Data["Category"] = GetAllCategories()
-	c.Data["MonthBlog"] = blogs.GetMonthSlice()
+	c.Data["MonthBlog"] = GetAllMonth()
 
 	c.LayoutSections["Sidebar"] = "sidebar.tpl"
 	c.TplNames = "list.tpl"

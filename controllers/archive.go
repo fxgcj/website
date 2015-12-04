@@ -20,7 +20,7 @@ func (c *ArchiveController) Get() {
 		page--
 	}
 	var begin, end int
-	blogs := GetBlogsMonth(year, month)
+	blogs := GetMonthBlogs(year, month)
 	if count := len(blogs); count > (page+1)*PAGE_STEP {
 		begin = page * PAGE_STEP
 		end = begin + PAGE_STEP
@@ -37,7 +37,7 @@ func (c *ArchiveController) Get() {
 	c.Data["LastestBlogs"] = blogs[:]
 	c.Data["Tags"] = GetAllTags()
 	c.Data["Category"] = GetAllCategories()
-	c.Data["MonthBlog"] = blogs.GetMonthSlice()
+	c.Data["MonthBlog"] = GetAllMonth()
 
 	c.LayoutSections["Sidebar"] = "sidebar.tpl"
 	c.TplNames = "list.tpl"
