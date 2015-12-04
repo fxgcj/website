@@ -30,7 +30,7 @@ func (c *TagController) Get() {
 	c.SetPageTitle(name)
 	c.AddKeyWord(name)
 	c.Data["Blogs"] = blogs[begin:end]
-	c.Data["LastestBlogs"] = blogs[:]
+	c.Data["LastestBlogs"] = GetLatestBlogs()
 	c.Data["Tags"] = GetAllTags()
 	c.Data["Category"] = GetAllCategories()
 	c.Data["MonthBlog"] = GetAllMonth()

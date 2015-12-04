@@ -30,7 +30,7 @@ func (s *SearchController) Get() {
 	s.SetPageTitle(keyword)
 	s.AddKeyWord(keyword)
 	s.Data["Blogs"] = blogs[begin:end]
-	s.Data["LastestBlogs"] = blogs[:]
+	s.Data["LastestBlogs"] = GetLatestBlogs()
 	s.Data["Tags"] = GetAllTags()
 	s.Data["Category"] = GetAllCategories()
 	s.Data["MonthBlog"] = GetAllMonth()

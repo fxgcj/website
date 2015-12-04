@@ -44,6 +44,16 @@ func GetAllCategories() (tags Tags) {
 	return
 }
 
+func GetLatestBlogs() (blogs Blogs) {
+	db := mgodb.GetMongoDB()
+	err := db.C(mgodb.C_BLOGS).Find(nil).Sort("-created").Limit(5).All(&blogs)
+	if err != nil {
+		log.Error("find latest blog  error, ", err)
+		return
+	}
+	return
+}
+
 func GetAllMonth() []string {
 	var m []string
 	var ret [](map[string]interface{})
