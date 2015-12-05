@@ -32,6 +32,7 @@ func (b *BaseController) InitWebPage() {
 	b.Data["Metes"] = `<meta property="qc:admins" content="3360317257660736727" />
 	<meta property="wb:webmaster" content="104fa85e4f2b2606" />`
 	b.Data["Tail"] = `热眼看社会，冷眼看风险。`
+	b.Data["FriendLinks"] = website.FriendLinks
 	b.SetPageTitle("首页")
 	b.SetDescript(website.Description)
 	b.AddKeyWord(website.Keywords...)
