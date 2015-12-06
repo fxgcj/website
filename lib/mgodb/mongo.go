@@ -3,7 +3,9 @@ package mgodb
 import (
 	"fmt"
 	"github.com/fxgcj/website/conf"
+	"github.com/fxgcj/website/lib/audit"
 	"gopkg.in/mgo.v2"
+	"time"
 )
 
 const (
@@ -35,10 +37,13 @@ func GetMongoDB() *mgo.Database {
 		}
 	}
 
+RECONNECT:
 	session, err = mgo.Dial(mgo_conn_url)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		audit.AuditError(mgo_conn_url, err)
+		time.Sleep(time.Second * 3)
+		goto RECONNECT
 	}
-	session.Ping()
 	return session.DB(DB_ARTICLE)
 }
