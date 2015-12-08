@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/fxgcj/website/conf"
 	"github.com/fxgcj/website/lib/audit"
+	logpkg "github.com/fxgcj/website/lib/log"
 	"gopkg.in/mgo.v2"
 	"time"
 )
@@ -22,6 +23,7 @@ var (
 	db           *mgo.Database
 	mongoConfig  *conf.MongoDB
 	mgo_conn_url string
+	log          = logpkg.GetLogger()
 )
 
 func init() {
@@ -38,12 +40,14 @@ func GetMongoDB() *mgo.Database {
 	}
 
 RECONNECT:
+	session, db = nil, nil
 	session, err = mgo.Dial(mgo_conn_url)
 	if err != nil {
-		fmt.Println(err)
+		log.Error(err)
 		audit.AuditError(mgo_conn_url, err)
 		time.Sleep(time.Second * 3)
 		goto RECONNECT
 	}
-	return session.DB(DB_ARTICLE)
+	db = session.DB(DB_ARTICLE)
+	return db
 }
