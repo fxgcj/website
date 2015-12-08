@@ -33,6 +33,10 @@ type Blog struct {
 }
 
 func GetBlogID(id string) (b *Blog) {
+	if !bson.IsObjectIdHex(id) {
+		return
+	}
+
 	db := mgodb.GetMongoDB()
 	b = new(Blog)
 	err := db.C(mgodb.C_BLOGS).FindId(bson.ObjectIdHex(id)).One(b)
@@ -44,6 +48,10 @@ func GetBlogID(id string) (b *Blog) {
 }
 
 func DeleteBlogID(id string) (err error) {
+	if !bson.IsObjectIdHex(id) {
+		return E_NOT_OBJ_ID
+	}
+
 	blog := &Blog{ID: bson.ObjectIdHex(id)}
 	return blog.Delete()
 }
