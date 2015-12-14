@@ -5,7 +5,7 @@ import (
 	"time"
 
 	// "github.com/fxgcj/website/lib/markdown"
-	"github.com/fxgcj/website/lib/mgodb"
+	"github.com/fxgcj/website/lib/mongo"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -37,9 +37,8 @@ func GetBlogID(id string) (b *Blog) {
 		return
 	}
 
-	db := mgodb.GetMongoDB()
 	b = new(Blog)
-	err := db.C(mgodb.C_BLOGS).FindId(bson.ObjectIdHex(id)).One(b)
+	err := mongo.DB().FindId(mongo.C_BLOGS, bson.ObjectIdHex(id), b)
 	if err != nil {
 		log.Error("get blog error, ", err)
 	}
@@ -64,8 +63,7 @@ func (b *Blog) Insert() (err error) {
 	if len(b.Source) > 0 {
 		b.Content = b.Source //markdown.Trans2html([]byte(b.Source))
 	}
-	db := mgodb.GetMongoDB()
-	err = db.C(mgodb.C_BLOGS).Insert(b)
+	err = mongo.DB().Insert(mongo.C_BLOGS, b)
 	if err != nil {
 		return err
 	}
@@ -79,8 +77,7 @@ func (b *Blog) UpdateID(id string) (err error) {
 	}
 	bid := bson.ObjectIdHex(id)
 	old := new(Blog)
-	db := mgodb.GetMongoDB()
-	err = db.C(mgodb.C_BLOGS).FindId(bid).One(old)
+	err = mongo.DB().FindId(mongo.C_BLOGS, bid, old)
 	if err != nil {
 		return
 	}
@@ -93,11 +90,11 @@ func (b *Blog) UpdateID(id string) (err error) {
 	if len(b.Source) > 0 {
 		b.Content = b.Source //markdown.Trans2html([]byte(b.Source))
 	}
-	err = db.C(mgodb.C_BLOGS).UpdateId(b.ID, b)
+	err = mongo.DB().UpdateId(mongo.C_BLOGS, b.ID, b)
 	if err != nil {
 		return err
 	}
-	_, err = b.removeAllGroup()
+	err = b.removeAllGroup()
 	if err != nil {
 		return err
 	}
@@ -106,63 +103,55 @@ func (b *Blog) UpdateID(id string) (err error) {
 }
 
 func (b *Blog) Delete() (err error) {
-	db := mgodb.GetMongoDB()
-	err = db.C(mgodb.C_BLOGS).RemoveId(b.ID)
+	err = mongo.DB().RemoveId(mongo.C_BLOGS, b.ID)
 	if err != nil {
 		return err
 	}
-	_, err = b.removeAllGroup()
+	err = b.removeAllGroup()
 	return err
 }
 
 // 插入文章的tag信息到数据库
 func (b *Blog) insertGroup() error {
-	db := mgodb.GetMongoDB()
 	for _, tag := range b.Tags {
 		if tag == "" {
 			continue
 		}
-		info, err := db.C(mgodb.C_TAGS).Upsert(bson.M{"name": tag},
-			bson.M{"$push": bson.M{"blogs": b.ID}})
+		err := mongo.DB().Upsert(mongo.C_TAGS, bson.M{"name": tag}, bson.M{"$push": bson.M{"blogs": b.ID}})
 		if err != nil {
-			return fmt.Errorf("%s %s\n", info, err)
+			return fmt.Errorf("%s\n", err)
 		}
 	}
 	for _, tag := range b.Category {
 		if tag == "" {
 			continue
 		}
-		info, err := db.C(mgodb.C_CATEGORY).Upsert(bson.M{"name": tag},
+		err := mongo.DB().Upsert(mongo.C_CATEGORY, bson.M{"name": tag},
 			bson.M{"$push": bson.M{"blogs": b.ID}})
 		if err != nil {
-			return fmt.Errorf("%s %s\n", info, err)
+			return fmt.Errorf("%s\n", err)
 		}
 	}
 
-	_, err := db.C(mgodb.C_MONTH).Upsert(bson.M{"name": fmt.Sprintf("%d-%d", b.Created.Year(), b.Created.Month())},
+	err := mongo.DB().Upsert(mongo.C_MONTH, bson.M{"name": fmt.Sprintf("%d-%d", b.Created.Year(), b.Created.Month())},
 		bson.M{"$push": bson.M{"blogs": b.ID}})
 
 	return err
 }
 
 // 移除文章所有标签
-func (b *Blog) removeAllGroup() (count int, err error) {
-	db := mgodb.GetMongoDB()
-	info, err := db.C(mgodb.C_TAGS).Upsert(nil,
-		bson.M{"$pull": bson.M{"blogs": b.ID}})
+func (b *Blog) removeAllGroup() (err error) {
+	err = mongo.DB().UpdateAll(mongo.C_TAGS, nil, bson.M{"$pull": bson.M{"blogs": b.ID}})
 	if err != nil {
 		return
 	}
-	count = info.Removed
 
-	info, err = db.C(mgodb.C_CATEGORY).Upsert(nil,
-		bson.M{"$pull": bson.M{"blogs": b.ID}})
+	err = mongo.DB().UpdateAll(mongo.C_CATEGORY, nil, bson.M{"$pull": bson.M{"blogs": b.ID}})
 	if err != nil {
 		return
 	}
-	count += info.Removed
 
-	info, err = db.C(mgodb.C_MONTH).Upsert(nil, bson.M{"$pull": bson.M{"blogs": b.ID}})
+	err = mongo.DB().UpdateAll(mongo.C_MONTH, nil, bson.M{"$pull": bson.M{"blogs": b.ID}})
 	return
 }
 
