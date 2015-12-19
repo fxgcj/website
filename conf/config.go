@@ -33,6 +33,7 @@ type AppConfig struct {
 
 type WebSite struct {
 	Title          string            `json:"title"`
+	Site           string            `json:"site"`
 	Keywords       []string          `json:"keywords"`
 	Description    string            `json:"description"`
 	CommitPassword string            `json:"commit_password"`

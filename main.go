@@ -5,8 +5,10 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/fxgcj/website/conf"
 	logpkg "github.com/fxgcj/website/lib/log"
+	"github.com/fxgcj/website/models"
 	"github.com/fxgcj/website/routers"
 	"gopkg.in/mgo.v2/bson"
+	"net/http"
 	"strings"
 	"time"
 )
@@ -24,6 +26,7 @@ func init() {
 }
 
 func main() {
+	pushBaidu()
 	beego.Run()
 }
 
@@ -58,4 +61,24 @@ func BeegoInit() {
 	})
 
 	routers.LoadRouters()
+}
+
+func pushBaidu() {
+	go func() {
+		for ; ; time.Sleep(time.Hour * 2) {
+			urls := models.GetAllURLs()
+			if len(urls) < 2 {
+				log.Warning("get all urls : ", len(urls))
+				continue
+			}
+			api := `http://data.zz.baidu.com/urls?site=www.fxgc.org&token=qkOcqAbvlHmU8ukC&type=original`
+			bodyType := "text/plain"
+			body := strings.NewReader(strings.Join(urls, "\n"))
+			req, err := http.Post(api, bodyType, body)
+			if err != nil || req.StatusCode > 200 {
+				log.Error("push baidu err, ", err)
+			}
+			log.Notice("push baidu successful")
+		}
+	}()
 }

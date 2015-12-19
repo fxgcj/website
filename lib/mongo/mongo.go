@@ -91,7 +91,7 @@ func (self *Mdb) connect() {
 	var err error
 	self.baseSession, err = mgo.Dial(url)
 	if err != nil {
-		audit.AuditError(err)
+		audit.AuditError(err, url, self)
 		panic(err)
 	}
 }
