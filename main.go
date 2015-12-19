@@ -8,6 +8,7 @@ import (
 	"github.com/fxgcj/website/models"
 	"github.com/fxgcj/website/routers"
 	"gopkg.in/mgo.v2/bson"
+	"io/ioutil"
 	"net/http"
 	"strings"
 	"time"
@@ -80,6 +81,8 @@ func pushBaidu() {
 				log.Error("push baidu err, ", err)
 				continue
 			}
+			bs, _ := ioutil.ReadAll(req.Body)
+			log.Debugf("%s", string(bs))
 			log.Notice("push baidu successful: ", len(urls))
 		}
 	}()

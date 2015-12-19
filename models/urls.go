@@ -34,7 +34,7 @@ func GetAllURLs() []string {
 		if len(ym) != 2 {
 			continue
 		}
-		urls = append(urls, fmt.Sprintf("%s%d/%02d", home, ym[0], ym[1]))
+		urls = append(urls, fmt.Sprintf("%s%s/%s", home, ym[0], ym[1]))
 	}
 	return urls
 }
