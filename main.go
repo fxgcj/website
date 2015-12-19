@@ -67,6 +67,7 @@ func pushBaidu() {
 	go func() {
 		for ; ; time.Sleep(time.Hour * 2) {
 			urls := models.GetAllURLs()
+			log.Debug("get urls, ", urls)
 			if len(urls) < 2 {
 				log.Warning("get all urls : ", len(urls))
 				continue
@@ -77,8 +78,9 @@ func pushBaidu() {
 			req, err := http.Post(api, bodyType, body)
 			if err != nil || req.StatusCode > 200 {
 				log.Error("push baidu err, ", err)
+				continue
 			}
-			log.Notice("push baidu successful")
+			log.Notice("push baidu successful: ", len(urls))
 		}
 	}()
 }
