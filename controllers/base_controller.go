@@ -53,6 +53,10 @@ func (b *BaseController) InitWebPage() {
 	// b.AddCustomJsScript("//cdn.bootcss.com/wow/1.1.2/", "wow.min.js")
 	b.AddCssStyle("style.css")
 
+	b.Data["IsPaging"] = false
+	b.Data["LastPage"] = 1
+	b.Data["Pages"] = []int{1}
+
 	b.LayoutSections = make(map[string]string)
 
 	b.Layout = "layout/index.html"

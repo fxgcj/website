@@ -5,7 +5,7 @@ import (
 )
 
 type SearchController struct {
-	ListController
+	BaseController
 }
 
 func (s *SearchController) Get() {

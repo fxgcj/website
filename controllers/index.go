@@ -5,7 +5,7 @@ import (
 )
 
 type IndexController struct {
-	ListController
+	BaseController
 }
 
 func (c *IndexController) Get() {

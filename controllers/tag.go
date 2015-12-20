@@ -5,7 +5,7 @@ import (
 )
 
 type TagController struct {
-	ListController
+	BaseController
 }
 
 func (t *TagController) Get() {

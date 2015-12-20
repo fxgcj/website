@@ -5,7 +5,7 @@ import (
 )
 
 type CategoryController struct {
-	ListController
+	BaseController
 }
 
 func (c *CategoryController) Get() {

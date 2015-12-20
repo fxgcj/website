@@ -7,7 +7,7 @@ import (
 )
 
 type ArchiveController struct {
-	ListController
+	BaseController
 }
 
 func (a *ArchiveController) Get() {
