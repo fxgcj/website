@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	PAGE_STEP = 2
+	PAGE_STEP = 7
 
 	COOKIE_SECRET     = "cookie_secret"
 	COOKIE_SECRET_LEN = 15

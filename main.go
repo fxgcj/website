@@ -27,7 +27,7 @@ func init() {
 }
 
 func main() {
-	// pushBaidu()
+	pushBaidu()
 	beego.Run()
 }
 
