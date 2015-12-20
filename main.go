@@ -27,7 +27,7 @@ func init() {
 }
 
 func main() {
-	pushBaidu()
+	// pushBaidu()
 	beego.Run()
 }
 
@@ -59,6 +59,9 @@ func BeegoInit() {
 			return fmt.Sprintf("%s/%s", mstr[0], mstr[1])
 		}
 		return ""
+	})
+	beego.AddFuncMap("Add", func(a, b int) string {
+		return fmt.Sprint(a + b)
 	})
 
 	routers.LoadRouters()

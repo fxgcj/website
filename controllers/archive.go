@@ -7,38 +7,27 @@ import (
 )
 
 type ArchiveController struct {
-	BaseController
+	ListController
 }
 
-func (c *ArchiveController) Get() {
+func (a *ArchiveController) Get() {
 
-	year, _ := strconv.Atoi(c.Ctx.Input.Param(":year"))
-	month, _ := strconv.Atoi(c.Ctx.Input.Param(":month"))
+	year, _ := strconv.Atoi(a.Ctx.Input.Param(":year"))
+	month, _ := strconv.Atoi(a.Ctx.Input.Param(":month"))
 
-	page, _ := c.GetInt("page")
-	if page > 0 {
-		page--
-	}
-	var begin, end int
 	blogs := GetMonthBlogs(year, month)
-	if count := len(blogs); count > (page+1)*PAGE_STEP {
-		begin = page * PAGE_STEP
-		end = begin + PAGE_STEP
-	} else if count < page*PAGE_STEP {
-		begin = (count / PAGE_STEP) * PAGE_STEP
-		end = count
-	} else {
-		begin = page * PAGE_STEP
-		end = count
-	}
 
-	c.SetPageTitle(fmt.Sprintf("%d年%d月", year, month))
-	c.Data["Blogs"] = blogs[begin:end]
-	c.Data["LastestBlogs"] = GetLatestBlogs()
-	c.Data["Tags"] = GetAllTags()
-	c.Data["Category"] = GetAllCategories()
-	c.Data["MonthBlog"] = GetAllMonth()
+	a.setPaging(len(blogs), PAGE_STEP)
 
-	c.LayoutSections["Sidebar"] = "sidebar.tpl"
-	c.TplNames = "list.tpl"
+	begin, end := a.getPageStartEnd(len(blogs), PAGE_STEP)
+
+	a.SetPageTitle(fmt.Sprintf("%d年%d月", year, month))
+	a.Data["Blogs"] = blogs[begin:end]
+	a.Data["LastestBlogs"] = GetLatestBlogs()
+	a.Data["Tags"] = GetAllTags()
+	a.Data["Category"] = GetAllCategories()
+	a.Data["MonthBlog"] = GetAllMonth()
+
+	a.LayoutSections["Sidebar"] = "sidebar.tpl"
+	a.TplNames = "list.tpl"
 }

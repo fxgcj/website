@@ -5,27 +5,16 @@ import (
 )
 
 type CategoryController struct {
-	BaseController
+	ListController
 }
 
 func (c *CategoryController) Get() {
 	name := c.GetString("name")
-	page, _ := c.GetInt("page")
-	if page > 0 {
-		page--
-	}
-	var begin, end int
 	blogs := GetBlogsGroup("category", name)
-	if count := len(blogs); count > (page+1)*PAGE_STEP {
-		begin = page * PAGE_STEP
-		end = begin + PAGE_STEP
-	} else if count < page*PAGE_STEP {
-		begin = (count / PAGE_STEP) * PAGE_STEP
-		end = count
-	} else {
-		begin = page * PAGE_STEP
-		end = count
-	}
+
+	c.setPaging(len(blogs), PAGE_STEP)
+
+	begin, end := c.getPageStartEnd(len(blogs), PAGE_STEP)
 
 	c.SetPageTitle(name)
 	c.AddKeyWord(name)

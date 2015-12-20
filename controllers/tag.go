@@ -5,36 +5,25 @@ import (
 )
 
 type TagController struct {
-	BaseController
+	ListController
 }
 
-func (c *TagController) Get() {
-	name := c.GetString("name")
-	page, _ := c.GetInt("page")
-	if page > 0 {
-		page--
-	}
-	var begin, end int
+func (t *TagController) Get() {
+	name := t.GetString("name")
 	blogs := GetBlogsGroup("tag", name)
-	if count := len(blogs); count > (page+1)*PAGE_STEP {
-		begin = page * PAGE_STEP
-		end = begin + PAGE_STEP
-	} else if count < page*PAGE_STEP {
-		begin = (count / PAGE_STEP) * PAGE_STEP
-		end = count
-	} else {
-		begin = page * PAGE_STEP
-		end = count
-	}
 
-	c.SetPageTitle(name)
-	c.AddKeyWord(name)
-	c.Data["Blogs"] = blogs[begin:end]
-	c.Data["LastestBlogs"] = GetLatestBlogs()
-	c.Data["Tags"] = GetAllTags()
-	c.Data["Category"] = GetAllCategories()
-	c.Data["MonthBlog"] = GetAllMonth()
+	t.setPaging(len(blogs), PAGE_STEP)
 
-	c.LayoutSections["Sidebar"] = "sidebar.tpl"
-	c.TplNames = "list.tpl"
+	begin, end := t.getPageStartEnd(len(blogs), PAGE_STEP)
+
+	t.SetPageTitle(name)
+	t.AddKeyWord(name)
+	t.Data["Blogs"] = blogs[begin:end]
+	t.Data["LastestBlogs"] = GetLatestBlogs()
+	t.Data["Tags"] = GetAllTags()
+	t.Data["Category"] = GetAllCategories()
+	t.Data["MonthBlog"] = GetAllMonth()
+
+	t.LayoutSections["Sidebar"] = "sidebar.tpl"
+	t.TplNames = "list.tpl"
 }

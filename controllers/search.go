@@ -10,22 +10,12 @@ type SearchController struct {
 
 func (s *SearchController) Get() {
 	keyword := s.GetString("keyword")
-	page, _ := s.GetInt("page")
-	if page > 0 {
-		page--
-	}
-	var begin, end int
+
 	blogs := SearchBlogs(keyword)
-	if count := len(blogs); count > (page+1)*PAGE_STEP {
-		begin = page * PAGE_STEP
-		end = begin + PAGE_STEP
-	} else if count < page*PAGE_STEP {
-		begin = (count / PAGE_STEP) * PAGE_STEP
-		end = count
-	} else {
-		begin = page * PAGE_STEP
-		end = count
-	}
+
+	s.setPaging(len(blogs), PAGE_STEP)
+
+	begin, end := s.getPageStartEnd(len(blogs), PAGE_STEP)
 
 	s.SetPageTitle(keyword)
 	s.AddKeyWord(keyword)

@@ -33,6 +33,18 @@
 	  </article>
 	  {{end}}
   </div>
+	{{if .IsPaging}}
+		<div class="center">
+		  <ul class="pagination">
+			<li><a class="prev page-numbers" href="{{ str2html .FirstPage }}"><i class="fa fa-angle-double-left"></i></a></li>
+			{{range $index,$value := .Query}}
+			<p></p>
+				<li><a class="prev page-numbers" href='{{str2html $value}}'><i class="fa">{{Add $index 1}}</i></a></li>
+			{{end}}
+			<li><a class="next page-numbers" href="{{str2html .LastPage}}"><i class="fa fa-angle-double-right"></i></a></li>
+		  </ul>
+		</div>
+	{{end}}
 </div>
 
 

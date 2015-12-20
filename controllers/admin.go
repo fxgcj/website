@@ -45,32 +45,21 @@ func (a *AdminController) getLogin() {
 }
 
 // (b *BaseController)GetBlogs ...
-func (c *AdminController) Get() {
-	page, _ := c.GetInt("page")
-	if page > 0 {
-		page--
-	}
-	var begin, end int
+func (a *AdminController) Get() {
 	blogs := GetAllBlogs()
-	if count := len(blogs); count > (page+1)*PAGE_STEP {
-		begin = page * PAGE_STEP
-		end = begin + PAGE_STEP
-	} else if count < page*PAGE_STEP {
-		begin = (count / PAGE_STEP) * PAGE_STEP
-		end = count
-	} else {
-		begin = page * PAGE_STEP
-		end = count
-	}
 
-	c.Data["Blogs"] = blogs[begin:end]
-	c.Data["LastestBlogs"] = GetLatestBlogs()
-	c.Data["Tags"] = GetAllTags()
-	c.Data["Category"] = GetAllCategories()
-	c.Data["MonthBlog"] = GetAllMonth()
+	a.setPaging(len(blogs), PAGE_STEP)
 
-	c.Layout = "layout/admin.html"
-	c.TplNames = "admin/list.tpl"
+	begin, end := a.getPageStartEnd(len(blogs), PAGE_STEP)
+
+	a.Data["Blogs"] = blogs[begin:end]
+	a.Data["LastestBlogs"] = GetLatestBlogs()
+	a.Data["Tags"] = GetAllTags()
+	a.Data["Category"] = GetAllCategories()
+	a.Data["MonthBlog"] = GetAllMonth()
+
+	a.Layout = "layout/admin.html"
+	a.TplNames = "admin/list.tpl"
 }
 
 func (a *AdminController) Create() {

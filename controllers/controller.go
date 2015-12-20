@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	PAGE_STEP = 7
+	PAGE_STEP = 2
 
 	COOKIE_SECRET     = "cookie_secret"
 	COOKIE_SECRET_LEN = 15
@@ -143,4 +143,53 @@ func (c *Controller) AddCustomCssStyle(src_url string, args ...string) {
 		csstags = append(csstags, newtag)
 	}
 	c.Data["Styles"] = strings.Join(csstags, "\n")
+}
+
+func (c *Controller) setPaging(count, step int) {
+	log.Debugf("%#v", c.Ctx.Input.Params)
+	c.Data["IsPaging"] = false
+	if count > step {
+		lastPage := (count + (step+1)/2) / step
+
+		oldQuery := make(map[string][]string)
+		querys := make([]string, 0, lastPage-1)
+
+		if c.Ctx.Input.Request.Form == nil {
+			c.Ctx.Request.ParseForm()
+		}
+		for k, v := range c.Ctx.Request.Form {
+			oldQuery[k] = v
+		}
+		for i := 0; i < lastPage; i++ {
+			oldQuery["page"] = []string{fmt.Sprint(i + 1)}
+			cells := make([]string, 0, len(oldQuery))
+			for k, v := range oldQuery {
+				cells = append(cells, fmt.Sprintf("%s=%s", k, strings.Join(v, ",")))
+			}
+			querys = append(querys, "?"+strings.Join(cells, "&"))
+		}
+		log.Debugf("querys %s", querys)
+		c.Data["IsPaging"] = true
+		c.Data["LastPage"] = querys[len(querys)-1]
+		c.Data["FirstPage"] = querys[0]
+		c.Data["Query"] = querys
+	}
+}
+
+func (c *Controller) getPageStartEnd(count, step int) (begin, end int) {
+	page, _ := c.GetInt("page")
+	if page > 0 {
+		page--
+	}
+	if count > (page+1)*step {
+		begin = page * step
+		end = begin + step
+	} else if count < page*step {
+		begin = (count / step) * step
+		end = count
+	} else {
+		begin = page * step
+		end = count
+	}
+	return
 }
